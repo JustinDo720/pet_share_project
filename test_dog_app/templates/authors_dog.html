@@ -1,5 +1,12 @@
+{% load static %}
 <a href="{% url 'index' %}">Home Page</a>
 
-<h1>Muffin</h1>
-
-<p>My dog </p>
+<h1>
+    Muffin
+</h1>
+<img
+        style="width: 650px; height: 750px;"
+        src="{% static 'test_dog_app/muffin.jpg'%}" alt="My Muffin">
+<p>
+    My dog
+</p>
