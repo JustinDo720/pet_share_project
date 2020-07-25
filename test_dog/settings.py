@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # My apps
     'test_dog_app',
+    'rest_framework',
 
 ]
 
