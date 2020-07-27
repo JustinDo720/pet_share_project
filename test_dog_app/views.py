@@ -1,6 +1,19 @@
 from django.shortcuts import render
 from .models import DogName, Entry
+from .serializer import DogNameSerializer, EntrySerializer
+from rest_framework import viewsets
+
 # Create your views here.
+
+
+class DogNameViewSet(viewsets.ModelViewSet):
+    queryset = DogName.objects.all()
+    serializer_class = DogNameSerializer
+
+
+class EntryViewSet(viewsets.ModelViewSet):
+    queryset = Entry.objects.all()
+    serializer_class = EntrySerializer
 
 
 def index(request):
