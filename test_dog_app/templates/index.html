@@ -1,4 +1,6 @@
-<a href="{% url 'authors_dog' %}">Author's Dog</a>
+{% extends 'base.html' %}
+
+{% block content %}
 
 <div style="text-align: center;">
     <h1>Home Page</h1>
@@ -7,3 +9,5 @@
         about them to share with out people online.
     </h2>
 </div>
+
+{% endblock content %}

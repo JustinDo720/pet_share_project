@@ -8,6 +8,10 @@ def index(request):
 
 
 def authors_dog(request):
+    return render(request, 'authors_dog.html')
+
+
+def user_entries(request):
     dog_name = DogName.objects.all()
     dog_bio = Entry.objects.all()
 
@@ -15,4 +19,4 @@ def authors_dog(request):
         'dog_name': dog_name,
         'dog_bio': dog_bio
     }
-    return render(request, 'authors_dog.html', content)
+    return render(request, 'user_entries.html',content)
