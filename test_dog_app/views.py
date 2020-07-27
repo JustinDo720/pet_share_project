@@ -33,3 +33,12 @@ def user_entries(request):
         'dog_bio': dog_bio
     }
     return render(request, 'user_entries.html',content)
+
+
+def write_about_dog(request):
+    entry_ = Entry.objects.create()
+
+    content = {
+    'entry_': entry_
+    }
+    return render(request, 'write_about_dog.html',content)

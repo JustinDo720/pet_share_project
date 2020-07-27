@@ -12,6 +12,6 @@ urlpatterns = [
     path('dog_rest_api/',include(router.urls)),
     path('', views.index, name='index'),
     path('authors_dog', views.authors_dog, name='authors_dog'),
-    path('user_entries', views.user_entries, name = 'user_entries')
-
+    path('user_entries', views.user_entries, name = 'user_entries'),
+    path('write_about_dog', views.write_about_dog, name='write_about_dog'),
 ]
