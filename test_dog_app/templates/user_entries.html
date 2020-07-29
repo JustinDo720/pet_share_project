@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<p>THis is an example of user entries</p>
+
+    {% for dog in dog_bio %}
+        <h2>
+            <b>
+                <u>
+                    {{ dog.dog_name }}
+                </u>
+            </b>
+        </h2>
+        <img src="{{dog.dog_photo.image.url}}" alt="Dog Photo">
+        <p>
+            <BLOCKQUOTE>
+                {{ dog.bio_entry }}
+            </BLOCKQUOTE>
+        </p>
+    {% endfor %}
+
 {% endblock content %}

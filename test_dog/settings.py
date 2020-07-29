@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # My apps
     'test_dog_app',
     'rest_framework',
+    'django_extensions',
 
 ]
 
@@ -124,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "/static/"),
     ]
 
 MEDIA_URL = '/media/'

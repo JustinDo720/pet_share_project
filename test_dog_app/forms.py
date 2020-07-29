@@ -14,4 +14,4 @@ class EntryForm(forms.ModelForm):
         model = Entry
         fields = ['bio_entry']
         labels = {'bio_entry': 'Dog\'s Biography'}
-        widgets = {'bio_entry': forms.Textarea(attrs={'cols':80)}
+        widgets = {'bio_entry': forms.Textarea(attrs={'cols':80})}

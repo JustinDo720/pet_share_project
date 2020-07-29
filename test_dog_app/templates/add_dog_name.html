@@ -1,1 +1,12 @@
 {% extends 'base.html' %}
+
+{% block content %}
+    <p>Talk about your dog here!</p>
+
+    <form action="{% url 'test_dog_app:add_dog_name' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Add your dog's name to our list!</button>
+    </form>
+
+{% endblock content %}
