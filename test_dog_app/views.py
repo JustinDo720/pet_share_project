@@ -27,21 +27,21 @@ def authors_dog(request):
 
 
 def user_entries(request):
-    user_dog = DogName.objects.all()  # This must be the same as user_private_entries
+    dogs = DogName.objects.all()  # This must be the same as user_private_entries
 
     content = {
-        'user_dog': user_dog
+        'dogs': dogs
     }
     return render(request, 'user_entries.html', content)
 
 
 def user_private_entries(request, dog_id):
-    user_dog = DogName.objects.get(id=dog_id)
-    user_dog_entries = user_dog.entry_set.all()
+    dog = DogName.objects.get(id=dog_id)
+    dog_entries = dog.entry_set.all()
 
     content = {
-        'user_dog': user_dog,
-        'user_dog_entries': user_dog_entries
+        'dog': dog,
+        'dog_entries': dog_entries
     }
     return render(request, 'user_private_entries.html', content)
 
