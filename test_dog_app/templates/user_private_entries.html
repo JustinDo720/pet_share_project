@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="text-align: center;">
+    <h1>
+        {{user.username }}'s {{ user_dog }}
+    </h1>
+</div>
+    <h2>Entries</h2>
+    <li>
+        {% for entry in user_dog_entries %}
+            {{ entry }}
+        {% endfor %}
+    </li>
+
+
+{% endblock content %}

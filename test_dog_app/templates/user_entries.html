@@ -1,22 +1,15 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-
-    {% for dog in dog_bio %}
-        <h2>
-            <b>
-                <u>
-                    {{ dog.dog_name }}
-                </u>
-            </b>
-        </h2>
-        <img src="{{dog.dog_photo.image.url}}" alt="Dog Photo">
-        <p>
-            <BLOCKQUOTE>
-                {{ dog.bio_entry }}
-            </BLOCKQUOTE>
-        </p>
-    {% endfor %}
-
+    <h3>
+        {% for dog in user_dogs %}
+            <a href="{% url 'test_dog_app:user_private_entries' dog.id %}">
+               {{ forloop.counter }}.<u>{{ dog }}</u><br>
+            </a>
+        {% empty %}
+            <ul>
+                No Dog names have been added.
+            </ul>
+        {% endfor %}
+    </h3>
 {% endblock content %}

@@ -9,12 +9,15 @@ router = routers.DefaultRouter()
 router.register('Dog\'s Name', views.DogNameViewSet)
 router.register('Dog\'s Biography', views.EntryViewSet)
 
+app_name = 'test_dog_app'
+
 urlpatterns = [
     path('rest_auth/', include('rest_framework.urls')),
     path('dog_rest_api/',include(router.urls)),
     path('', views.index, name='index'),
     path('authors_dog', views.authors_dog, name='authors_dog'),
-    path('user_entries', views.user_entries, name= 'user_entries'),
+    path('user_entries/', views.user_entries, name= 'user_entries'),
+    path('user_entries/<int:user_entry_id>/', views.user_private_entries, name= 'user_private_entries'),
     path('add_dog_name', views.add_dog_name, name= 'add_dog_name'),
     path('write_about_dog', views.write_about_dog, name='write_about_dog'),
 ]

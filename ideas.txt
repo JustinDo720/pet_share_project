@@ -19,3 +19,5 @@ Apply some bootstrap
     consider using a different layout
 Profile pictures maybe
 Psql Db
+
+Make sure to change authentication for REST api

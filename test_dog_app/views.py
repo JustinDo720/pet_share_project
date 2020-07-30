@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import DogName, Entry
+from .models import DogName, Entry, User
 from .serializer import DogNameSerializer, EntrySerializer
 from rest_framework import viewsets
 from .forms import DogNameForm, EntryForm
@@ -27,14 +27,23 @@ def authors_dog(request):
 
 
 def user_entries(request):
-    dog_name = DogName.objects.all()
-    dog_bio = Entry.objects.all()
+    user_dogs = DogName.objects.all()  # This must be the same as user_private_entries
 
     content = {
-        'dog_name': dog_name,
-        'dog_bio': dog_bio
+        'user_dogs': user_dogs
     }
     return render(request, 'user_entries.html', content)
+
+
+def user_private_entries(request, user_entry_id):
+    user_dog = DogName.objects.get(id=user_entry_id)
+    user_dog_entries = user_dog.entry_set.all()
+
+    content = {
+        'user_dog': user_dog,
+        'user_dog_entries': user_dog_entries
+    }
+    return render(request, 'user_private_entries.html', content)
 
 
 def add_dog_name(request):
