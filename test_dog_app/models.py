@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class DogName(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=70)
 
     def __str__(self):
