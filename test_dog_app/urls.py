@@ -17,9 +17,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('authors_dog', views.authors_dog, name='authors_dog'),
     path('user_entries/', views.user_entries, name= 'user_entries'),
-    path('user_entries/<int:user_entry_id>/', views.user_private_entries, name= 'user_private_entries'),
-    path('add_dog_name', views.add_dog_name, name= 'add_dog_name'),
-    path('write_about_dog', views.write_about_dog, name='write_about_dog'),
+    path('user_entries/<int:dog_id>/', views.user_private_entries, name= 'user_private_entries'),
+    path('add_dog_name/', views.add_dog_name, name= 'add_dog_name'),
+    path('write_about_dog/<int:dog_id>/', views.write_about_dog, name='write_about_dog'),
 ]
 
 if settings.DEBUG == True:

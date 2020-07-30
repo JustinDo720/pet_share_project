@@ -10,9 +10,13 @@
     <h2>Entries</h2>
     <li>
         {% for entry in user_dog_entries %}
-            {{ entry }}
+            {{ entry }} <br>
+        {% empty %}
+            <h2>No entries currently added. Please add one using the button below!</h2>
         {% endfor %}
     </li>
-
+    <a href="{% url 'test_dog_app:write_about_dog' user.id %}">
+    Add Entry Here!
+    </a>
 
 {% endblock content %}

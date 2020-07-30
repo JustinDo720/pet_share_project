@@ -1,2 +1,15 @@
 {% extends 'base.html' %}
 
+{% block content %}
+    <a href="{% url 'test_dog_app:user_private_entries' user.id %}"> {{ user_dog }}</a>
+    <form action="{% url 'test_dog_app:write_about_dog' user.id %}" method = post>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+    <button name="submit">
+        Submit
+    </button>
+
+    </form>
+
+{% endblock content %}

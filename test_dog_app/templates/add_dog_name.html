@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Talk about your dog here!</p>
+    <p>Start by adding your dog's name here!</p>
 
     <form action="{% url 'test_dog_app:add_dog_name' %}" method="post">
         {% csrf_token %}
