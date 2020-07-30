@@ -69,10 +69,10 @@ def write_about_dog(request, dog_id):
         form = EntryForm(data=request.POST)
         if form.is_valid():
             new_bio = form.save(commit=False)
-            new_bio.bio_entry = dog
+            new_bio.dog_name = dog      # This refers to which dog the bio/form belongs to
             new_bio.save()
             return redirect('test_dog_app:user_private_entries', dog_id=dog_id)
 
-    content = {'form': form, 'user_dog': dog}
+    content = {'form': form, 'dog': dog}
     return render(request, 'write_about_dog.html', content)
 
