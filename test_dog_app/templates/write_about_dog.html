@@ -2,7 +2,7 @@
 
 {% block content %}
     <a href="{% url 'test_dog_app:user_private_entries' dog.id %}"> {{ dog }}</a>
-    <form action="{% url 'test_dog_app:write_about_dog' dog.id %}" method = post>
+    <form action="{% url 'test_dog_app:write_about_dog' dog.id %}" enctype="multipart/form-data" method = post>
         {% csrf_token %}
         {{ form.as_p }}
 

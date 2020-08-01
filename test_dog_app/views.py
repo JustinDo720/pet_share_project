@@ -66,7 +66,7 @@ def write_about_dog(request, dog_id):
     if request.method != 'POST':
         form = EntryForm()
     else:
-        form = EntryForm(data=request.POST)
+        form = EntryForm(data=request.POST, files= request.FILES)
         if form.is_valid():
             new_bio = form.save(commit=False)
             new_bio.dog_name = dog      # This refers to which dog the bio/form belongs to
@@ -87,7 +87,7 @@ def edit_dog_bio(request, entry_bio_id):
         form = EntryForm(instance=dog_entries)
     else:
         # Allow the user to POST their edits
-        form = EntryForm(instance=dog_entries, data= request.POST)
+        form = EntryForm(instance=dog_entries, data= request.POST, files= request.FILES)
         if form.is_valid():
             form.save(commit=True)
             return redirect('test_dog_app:user_private_entries', dog_id=dogs.id)
