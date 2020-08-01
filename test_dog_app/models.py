@@ -18,6 +18,6 @@ class Entry(models.Model):
     date_entry = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.dog_name, self.bio_entry[:50]
+        return f'{self.bio_entry[:50]}...'
 
 
