@@ -21,3 +21,10 @@ Profile pictures maybe
 Psql Db
 
 Make sure to change authentication for REST api
+
+Some Ideas:
+    Make sure to reformat date
+    Change text area and make forms look nicer
+    Edit button too
+    Read More
+    'bio entry...' read more link

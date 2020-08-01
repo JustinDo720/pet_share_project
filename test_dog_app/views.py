@@ -63,6 +63,7 @@ def add_dog_name(request):
 def write_about_dog(request, dog_id):
     dog = DogName.objects.get(id=dog_id)
 
+
     if request.method != 'POST':
         form = EntryForm()
     else:
@@ -97,3 +98,4 @@ def edit_dog_bio(request, entry_bio_id):
         'dog_entries': dog_entries
     }
     return render(request, 'edit_dog_bio.html', content)
+
