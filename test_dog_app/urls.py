@@ -12,7 +12,6 @@ router.register('Dog\'s Biography', views.EntryViewSet)
 app_name = 'test_dog_app'
 
 urlpatterns = [
-    path('rest_auth/', include('rest_framework.urls')),
     path('dog_rest_api/',include(router.urls)),
     path('', views.index, name='index'),
     path('authors_dog', views.authors_dog, name='authors_dog'),
