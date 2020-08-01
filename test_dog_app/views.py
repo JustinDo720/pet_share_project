@@ -76,3 +76,24 @@ def write_about_dog(request, dog_id):
     content = {'form': form, 'dog': dog}
     return render(request, 'write_about_dog.html', content)
 
+
+def edit_dog_bio(request, entry_bio_id):
+    dog_entries = Entry.objects.get(id= entry_bio_id)
+    dogs = dog_entries.dog_name
+
+    if request.method != 'POST':
+        # Fetching original entry
+        form = EntryForm(instance=dog_entries)
+    else:
+        # Allow the user to POST their edits
+        form = EntryForm(instance=dog_entries, data= request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('test_dog_app:user_private_entries', dog_id= dogs.id )
+
+    content = {
+        'form': form,
+        'dogs': dogs,
+        'dog_entries': dog_entries
+    }
+    return render(request, 'edit_dog_bio.html', content)

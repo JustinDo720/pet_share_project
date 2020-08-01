@@ -13,6 +13,9 @@
             <li>
                 {{ entry.bio_entry | linebreaksbr }}
                 {{ entry.date_entry }}
+                <a href="{% url 'test_dog_app:edit_dog_bio' dog.id %}">
+                    Edit Entry
+                </a>
             </li>
         </p>
     {% empty %}
