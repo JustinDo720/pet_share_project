@@ -1,4 +1,4 @@
 # Project exclude paths
 /venv/
 __/pycache/
-db.sqlite3
+/db.sqlite3/
