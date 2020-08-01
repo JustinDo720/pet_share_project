@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>
+        {% for dog in dogs %}
+            <a href="{% url 'test_dog_app:user_private_entries' dog.id %}">
+               {{ forloop.counter }}. {{ dog }}<br>
+            </a>
+        {% empty %}
+            <ul>
+                No Dog names have been added.
+            </ul>
+        {% endfor %}
+    </h2>
+    <h2>
+        <a href="{% url 'test_dog_app:add_dog_name' %}">
+            Add your dog's name here!
+        </a>
+    </h2>
+{% endblock content %}

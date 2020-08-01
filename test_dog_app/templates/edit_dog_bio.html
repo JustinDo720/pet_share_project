@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url 'test_dog_app:user_private_entries' dogs.id %}"> {{ dogs }}</a>
+
+<p>Edit Biography:</p>
+<form action="{% url 'test_dog_app:edit_dog_bio' dogs.id %}" method="post">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button name="submit">Save Changes</button>
+</form>
+
+{% endblock content %}

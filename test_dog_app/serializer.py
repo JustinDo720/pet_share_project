@@ -4,6 +4,7 @@ from .models import DogName, Entry
 
 class DogNameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
+<<<<<<< HEAD
         model= DogName
         fields = {
             'id',
@@ -19,3 +20,17 @@ class EntrySerializer(serializers.HyperlinkedModelSerializer):
             'dog_name',
             'bio_entry'
         }
+=======
+        model = DogName
+        fields = [
+            'id', 'name'
+        ]
+
+
+class EntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Entry
+        fields = [
+            'id', 'dog_name', 'bio_entry'
+        ]
+>>>>>>> master

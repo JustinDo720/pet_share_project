@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     # My apps
     'test_dog_app',
     'rest_framework',
+<<<<<<< HEAD
+=======
+    'django_extensions',
+>>>>>>> master
 
 ]
 
@@ -124,5 +128,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "/static/"),
     ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'test_dog_app/media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+
+}

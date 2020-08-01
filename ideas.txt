@@ -1,0 +1,30 @@
+Images:
+    Use ImageField
+    Take a look at admin site
+    Media file
+    Change dir
+    Consider a separate model for multiple image submission for one dog (One to Many)
+
+User
+Password/ Login
+Display multiple user stories (Like a blog post)
+Careful with Authentication
+Work on regex url (or just url in general)
+Production
+    collect static file
+    maybe take a look at nginx
+    consider hosting on another platform besides heroku
+Apply some bootstrap
+    look at the blog
+    consider using a different layout
+Profile pictures maybe
+Psql Db
+
+Make sure to change authentication for REST api
+
+Some Ideas:
+    Make sure to reformat date
+    Change text area and make forms look nicer
+    Edit button too
+    Read More
+    'bio entry...' read more link

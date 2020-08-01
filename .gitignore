@@ -1,2 +1,4 @@
 # Project exclude paths
 /venv/
+__/pycache/
+/db.sqlite3/
