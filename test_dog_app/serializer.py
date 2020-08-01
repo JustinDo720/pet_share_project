@@ -14,5 +14,5 @@ class EntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entry
         fields = [
-            'id', 'dog_name', 'bio_entry'
+            'id', 'dog_name', 'bio_entry','dog_photo',
         ]

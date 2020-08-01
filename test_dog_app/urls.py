@@ -1,8 +1,7 @@
 from django.urls import path, include
 from . import views
 from rest_framework import routers
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 router = routers.DefaultRouter()
 
@@ -22,8 +21,5 @@ urlpatterns = [
     path('edit_dog_bio/<int:entry_bio_id>/', views.edit_dog_bio, name='edit_dog_bio')
 ]
 
-if settings.DEBUG == True:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 
 

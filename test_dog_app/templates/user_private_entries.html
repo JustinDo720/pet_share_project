@@ -10,6 +10,11 @@
     <h2>Entries</h2>
     {% for entry in dog_entries %}
         <p>
+            {% if entry.dog_photo %}
+                    {# If the photo exist then we showcase the photo #}
+                    <img src="{{ entry.dog_photo.url }}" alt="Dog's Photo"
+                    style="width: 200px;height:200px">
+                {% endif %}
             <li>
                 {{ entry.bio_entry | linebreaksbr }}
                 {{ entry.date_entry }}
