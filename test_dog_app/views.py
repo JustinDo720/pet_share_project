@@ -63,7 +63,6 @@ def add_dog_name(request):
 def write_about_dog(request, dog_id):
     dog = DogName.objects.get(id=dog_id)
 
-
     if request.method != 'POST':
         form = EntryForm()
     else:
@@ -71,6 +70,7 @@ def write_about_dog(request, dog_id):
         if form.is_valid():
             new_bio = form.save(commit=False)
             new_bio.dog_name = dog      # This refers to which dog the bio/form belongs to
+            # print(new_bio.dog_photo)
             new_bio.save()
             return redirect('test_dog_app:user_private_entries', dog_id=dog_id)
 
@@ -89,8 +89,8 @@ def edit_dog_bio(request, entry_bio_id):
         # Allow the user to POST their edits
         form = EntryForm(instance=dog_entries, data= request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('test_dog_app:user_private_entries', dog_id= dogs.id )
+            form.save(commit=True)
+            return redirect('test_dog_app:user_private_entries', dog_id=dogs.id)
 
     content = {
         'form': form,
