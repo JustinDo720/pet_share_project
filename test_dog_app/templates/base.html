@@ -1,8 +1,15 @@
 <a href="{% url 'test_dog_app:index' %}">Home Page</a>
 <a href="{% url 'test_dog_app:authors_dog' %}">Author's Dog</a>
 <a href="{% url 'test_dog_app:user_entries' %}">User Entries</a>
+<a href="{% url 'users:register' %}">Register</a>
 
-
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 {% block content %}
 {% endblock content %}
 

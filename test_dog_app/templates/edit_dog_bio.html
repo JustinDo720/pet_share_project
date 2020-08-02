@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters  %}
 
 {% block content %}
 <a href="{% url 'test_dog_app:user_private_entries' dogs.id %}"> {{ dogs }}</a>
@@ -8,7 +9,7 @@
     {# This id has to be the entry id because if it was the dog's id it will only change that entry  #}
 
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form | crispy }}
 
     <button name="submit">Save Changes</button>
 </form>

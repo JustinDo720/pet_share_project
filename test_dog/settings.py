@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     # My apps
     'test_dog_app',
     'rest_framework',
+    'users',
     'django_extensions',
+    'crispy_forms',
 
 ]
 
