@@ -31,20 +31,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    # My apps
+    # My apps. Make sure these goes first before some default overrides some templates.
     'test_dog_app',
     'rest_framework',
     'users',
     'django_extensions',
     'crispy_forms',
 
+    # Default apps
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +139,5 @@ REST_FRAMEWORK = {
     ]
 
 }
+
+LOGIN_REDIRECT_URL = '/'

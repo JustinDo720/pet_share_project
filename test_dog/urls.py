@@ -22,7 +22,7 @@ urlpatterns = [
     path('auth-api/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('', include('test_dog_app.urls', namespace='test_dog_app')),
-    path('', include('users.urls'))
+    path('users/', include('users.urls')), # ../users/login or logout etc.
 ]
 
 if settings.DEBUG == True:

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="text-align: center">
+        <h1>You have been logged out. Thank you for spending quality time on my website.</h1>
+        <img
+            style="width: 750px; height:650px;"
+            src="{% static 'test_dog_app/good_bye.gif'%}" alt="Log Out">
+    </div>
+{% endblock content %}
