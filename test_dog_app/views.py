@@ -3,7 +3,9 @@ from .models import DogName, Entry, User
 from .serializer import DogNameSerializer, EntrySerializer
 from rest_framework import viewsets
 from .forms import DogNameForm, EntryForm
-
+from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 
@@ -26,18 +28,22 @@ def authors_dog(request):
     return render(request, 'authors_dog.html')
 
 
+@login_required
 def user_entries(request):
-    dogs = DogName.objects.all()  # This must be the same as user_private_entries
-
+    dogs = DogName.objects.filter(owner=request.user.id)   # With this filter, the owners only get to see their dog
     content = {
         'dogs': dogs
     }
     return render(request, 'user_entries.html', content)
 
 
+@login_required
 def user_private_entries(request, dog_id):
     dog = DogName.objects.get(id=dog_id)
-    dog_entries = dog.entry_set.all()
+    dog_entries = dog.entry_set.order_by('-date_entry')
+
+    if dog.owner != request.user:
+        raise Http404
 
     content = {
         'dog': dog,
@@ -46,13 +52,17 @@ def user_private_entries(request, dog_id):
     return render(request, 'user_private_entries.html', content)
 
 
+@login_required
 def add_dog_name(request):
+
     if request.method != 'POST':
         form = DogNameForm()
     else:
         form = DogNameForm(data=request.POST)
         if form.is_valid():
             new_dog_name = form.save(commit=False)
+            new_dog_name.owner = request.user   # This puts the new dog under the requested user
+            messages.warning(request, f'User: {request.user}')  # Remove messages during production
             new_dog_name.save()
             return redirect('test_dog_app:user_entries')
 
@@ -60,8 +70,12 @@ def add_dog_name(request):
     return render(request, 'add_dog_name.html', content)
 
 
+@login_required
 def write_about_dog(request, dog_id):
     dog = DogName.objects.get(id=dog_id)
+
+    if dog.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         form = EntryForm()
@@ -78,9 +92,13 @@ def write_about_dog(request, dog_id):
     return render(request, 'write_about_dog.html', content)
 
 
+@login_required
 def edit_dog_bio(request, entry_bio_id):
     dog_entries = Entry.objects.get(id= entry_bio_id)
     dogs = dog_entries.dog_name
+
+    if dogs.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # Fetching original entry
