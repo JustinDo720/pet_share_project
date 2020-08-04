@@ -4,7 +4,8 @@
 <body style="background-color:#C2DFFF;">
     <a href="{% url 'test_dog_app:index' %}">Home Page</a>
     <a href="{% url 'test_dog_app:authors_dog' %}">Author's Dog</a>
-    <a href="{% url 'test_dog_app:user_entries' %}">User Entries</a>
+    <a href="{% url 'test_dog_app:user_entries' %}">Your Entries</a>
+    <a href="{% url 'test_dog_app:all_entries' %}">Blog</a>
 
 {% if user.is_authenticated %}
     Hello, {{ user }}!

@@ -117,3 +117,18 @@ def edit_dog_bio(request, entry_bio_id):
     }
     return render(request, 'edit_dog_bio.html', content)
 
+
+def all_entries(request):
+    sharable_entries = Entry.objects.filter(share=True)
+    context = {'sharable_entries': sharable_entries}
+    return render(request, 'all_entries.html', context)
+
+
+def share_dog(request, dog_id):
+    dog_to_share = DogName.objects.get(id=dog_id)
+    dog_info = dog_to_share.entry_set.all()
+    content = {'dog_to_share': dog_to_share, 'dog_info': dog_info}
+    a
+
+    return render(request, 'share_dog.html', content)
+

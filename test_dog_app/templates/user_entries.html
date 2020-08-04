@@ -4,7 +4,8 @@
     <h2>
         {% for dog in dogs %}
             <a href="{% url 'test_dog_app:user_private_entries' dog.id %}">
-               {{ forloop.counter }}. {{ dog }}<br>
+               {{ forloop.counter }}. {{ dog }}
+                <br>
             </a>
         {% empty %}
             <ul>

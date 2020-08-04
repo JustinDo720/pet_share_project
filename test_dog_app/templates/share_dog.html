@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="{% url 'test_dog_app:share_dog' dog_to_share.id %} method='post'">
+    <h2>Entries</h2>
+    {% for entry in dog_info %}
+        <p>
+            {% if entry.dog_photo %}
+                    {# If the photo exist then we showcase the photo #}
+                    <img src="{{ entry.dog_photo.url }}" alt="Dog's Photo"
+                    style="width: 200px;height:200px">
+                {% endif %}
+            <li>
+                {{ entry.bio_entry | linebreaksbr }}
+                {{ entry.date_entry }}
+                <a href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">Edit</a>
+
+            </li>
+        </p>
+    {% empty %}
+        <h2>No entries currently added. Please add one using the button below!</h2>
+    {% endfor %}
+
+{% endblock content %}

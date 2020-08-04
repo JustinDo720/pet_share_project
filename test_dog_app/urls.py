@@ -19,6 +19,8 @@ urlpatterns = [
     path('add_dog_name/', views.add_dog_name, name= 'add_dog_name'),
     path('write_about_dog/<int:dog_id>/', views.write_about_dog, name='write_about_dog'),
     path('edit_dog_bio/<int:entry_bio_id>/', views.edit_dog_bio, name='edit_dog_bio'),
+    path('all_entries', views.all_entries, name='all_entries'),
+    path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
 ]
 
 
