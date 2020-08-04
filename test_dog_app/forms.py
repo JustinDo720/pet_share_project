@@ -15,3 +15,10 @@ class EntryForm(forms.ModelForm):
         fields = ['bio_entry', 'dog_photo', 'share']
         labels = {'bio_entry': 'Dog\'s Biography', 'dog_photo': 'Dog\'s Photo', 'share': 'Share'}
         widgets = {'bio_entry': forms.Textarea(attrs={'cols':70})}
+
+
+# class ShareDogForm(forms.ModelForm):
+#     class Meta:
+#         model = Entry
+#         fields = ['share', 'dog_name.share']
+#         labels = {'share':'Share Entry:', 'dog_name.share': 'Share Dog:'}
