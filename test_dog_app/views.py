@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import DogName, Entry, User
 from .serializer import DogNameSerializer, EntrySerializer
 from rest_framework import viewsets
-from .forms import DogNameForm, EntryForm #ShareDogForm
+from .forms import DogNameForm, EntryForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -128,26 +128,17 @@ def share_dog(request, dog_id):
     dog_to_share = DogName.objects.get(id=dog_id)
     dog_info = dog_to_share.entry_set.all()
 
-    if request.method != 'POST':
-        dog_name_form = DogNameForm(instance=dog_to_share)
-        list_entry_form = [EntryForm(instance=entry) for entry in dog_info]
-    else:
-        dog_name_form = DogNameForm(instance=dog_to_share,
-                                    data=request.POST)
-        list_entry_form = [EntryForm(instance=entry,
-                                     data=request.POST,
-                                     files=request.FILES) for entry in dog_info]
-        dog_name_form.save()
+    if request.method == 'POST':
+        entry_to_share = request.POST.getlist('entry')
+        for entry in entry_to_share:
+            change_entry_share = Entry.objects.get(id=entry)
+            change_entry_share.share = True
+            change_entry_share.save()
 
-        for entry_form in list_entry_form:
-            entry_form.save()
-        messages.success(request, f'{dog_to_share} has been shared to the Blog')
-        return redirect('test_dog_app:all_entries')
+    content = {
+        'dog_to_share':dog_to_share,
+        'dog_info':dog_info,
 
-    content = {'dog_to_share': dog_to_share,
-               'dog_info': dog_info,
-               'dog_name_form': dog_name_form,
-               'list_entry_form': list_entry_form}
-
-    return render(request, 'share_dog.html', content)
+    }
+    return render(request, 'share_dog.html',content)
 
