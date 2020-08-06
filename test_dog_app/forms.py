@@ -12,7 +12,7 @@ class DogNameForm(forms.ModelForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['bio_entry', 'dog_photo', 'share']
-        labels = {'bio_entry': 'Dog\'s Biography', 'dog_photo': 'Dog\'s Photo', 'share': 'Share'}
+        fields = ['bio_entry', 'dog_photo']
+        labels = {'bio_entry': 'Dog\'s Biography', 'dog_photo': 'Dog\'s Photo'}
         widgets = {'bio_entry': forms.Textarea(attrs={'cols':70})}
 

@@ -17,7 +17,7 @@ class Entry(models.Model):
     bio_entry = models.TextField()
     dog_photo = models.ImageField(default=None, upload_to='photo_img/', blank=True)
     share = models.BooleanField(default=False)
-    date_entry = models.DateTimeField(auto_now_add=True)
+    date_entry = models.DateTimeField(auto_now_add=True)    # Change Date format
 
     def __str__(self):
         return f'{self.bio_entry[:50]}...'

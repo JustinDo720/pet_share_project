@@ -3,19 +3,18 @@
 {% block content %}
 
 <h1>Dogs</h1>
-
-{% for sharable_entry in sharable_entries %}
-   <h1>{{ sharable_entry.dog_name }}</h1>
-    <h2>Entries:</h2>
-        {% if sharable_entry.dog_photo %}
-            <img src="{{ sharable_entry.dog_photo.url }}" alt="Dog's Photo"
-                style="width: 200px;height:200px">
-            {% endif %}
-        <li>
-            {{ sharable_entry.bio_entry | linebreaksbr }}
-            {{ sharable_entry.date_entry }}
-{% empty %}
-    <p>There are no entry for this dog</p>
-{% endfor %}
+   {% for dog in shareable_dogs %}
+       <h2>{{ dog }}</h2>
+       {% for entry in shareable_entries %}
+           {% if entry.dog_name == dog %}
+               {% if entry.dog_photo %}
+                   <img src="{{ entry.dog_photo.url }}" alt="Dog-Photo">
+               {% endif %}
+               <ul>
+                    {{ entry | linebreaksbr }}
+               </ul>
+           {% endif %}
+       {% endfor %}
+   {% endfor %}
 
 {% endblock content %}

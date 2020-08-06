@@ -3,15 +3,21 @@
 {% block content %}
 
 <div style="text-align: center">
-    Dog_Name
+    {{ dog_to_share }}
 </div>
     <form action="{% url 'test_dog_app:share_dog' dog_to_share.id %}" method="post">
     {% csrf_token %}
     {% for entry in dog_info %}
-        {{ entry }} <input name="entry" type="checkbox" value="{{ entry.id }}"/><br>
+        <p>
+            {{ entry }}
+            <label>
+                Share <input name="entry" type="checkbox" value="{{ entry.id }}"/>
+            </label><br>
+        </p>
+
     {% empty %}
         <h2>No Entries have been added for {{ entry.dog_name }}</h2>
     {% endfor %}
-        <button name="submit">Submit</button>
+        <button name="submit">Share</button>
 </form>
 {% endblock content %}

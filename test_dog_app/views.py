@@ -119,8 +119,9 @@ def edit_dog_bio(request, entry_bio_id):
 
 
 def all_entries(request):
-    sharable_entries = Entry.objects.filter(share=True)
-    context = {'sharable_entries': sharable_entries}
+    shareable_dogs = DogName.objects.filter(share=True)
+    shareable_entries = Entry.objects.filter(share=True)
+    context = {'shareable_entries': shareable_entries, 'shareable_dogs':shareable_dogs}
     return render(request, 'all_entries.html', context)
 
 
@@ -130,10 +131,20 @@ def share_dog(request, dog_id):
 
     if request.method == 'POST':
         entry_to_share = request.POST.getlist('entry')
-        for entry in entry_to_share:
-            change_entry_share = Entry.objects.get(id=entry)
-            change_entry_share.share = True
-            change_entry_share.save()
+        print(entry_to_share)
+        if entry_to_share:  # If users checked any box then we run the for loop
+            dog_to_share.share = True
+            dog_to_share.save()
+            for entry in entry_to_share:
+                change_entry_share = Entry.objects.get(id=entry)
+                change_entry_share.share = True
+                change_entry_share.save()
+        else:
+            dog_to_share.share = False
+            dog_to_share.save()
+        return redirect('test_dog_app:all_entries')
+
+
 
     content = {
         'dog_to_share':dog_to_share,
