@@ -187,7 +187,14 @@ def community_profile(request):
                 entry_to_remove = Entry.objects.get(id=entry)
                 entry_to_remove.share = False
                 entry_to_remove.save()
-
+        for dog in dog_name:
+            specific_entries = [entry for entry in entries if entry.dog_name == dog]
+            if specific_entries:
+                dog.share = True
+                dog.save()
+            else:
+                dog.share = False
+                dog.save()
         return redirect('test_dog_app:community_profile')
 
     return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
