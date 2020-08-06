@@ -92,8 +92,12 @@ def write_about_dog(request, dog_id):
     return render(request, 'write_about_dog.html', content)
 
 
+@login_required
 def edit_dog_name(request, dog_id):
     dog_name = DogName.objects.get(id=dog_id)
+
+    if dog_name.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         form = DogNameForm(instance=dog_name)
@@ -104,6 +108,7 @@ def edit_dog_name(request, dog_id):
             return redirect('test_dog_app:user_entries')
 
     return render(request, 'edit_dog_name.html', {'form':form, 'dog_name': dog_name})
+
 
 @login_required
 def edit_dog_bio(request, entry_bio_id):
@@ -140,7 +145,8 @@ def all_entries(request):
 
 def share_dog(request, dog_id):
     dog_to_share = DogName.objects.get(id=dog_id)
-    dog_info = dog_to_share.entry_set.all()
+    dog_info = dog_to_share.entry_set.filter(share=False)
+    all_dog_entries = dog_to_share.entry_set.all()
 
     if request.method == 'POST':
         entry_to_share = request.POST.getlist('entry')
@@ -155,14 +161,34 @@ def share_dog(request, dog_id):
         else:
             dog_to_share.share = False
             dog_to_share.save()
+            for entry in dog_info:
+                entry.share = False
+                entry.save()
+
         return redirect('test_dog_app:all_entries')
-
-
 
     content = {
         'dog_to_share':dog_to_share,
         'dog_info':dog_info,
-
+        'all_dog_entries':all_dog_entries,
     }
     return render(request, 'share_dog.html',content)
+
+
+def community_profile(request):
+    dog_name = DogName.objects.filter(owner=request.user.id, share=True)
+    entries = Entry.objects.filter(share=True)
+
+    if request.method == 'POST':
+        remove_entries = request.POST.getlist('entry')
+        print(remove_entries)
+        if remove_entries:
+            for entry in remove_entries:
+                entry_to_remove = Entry.objects.get(id=entry)
+                entry_to_remove.share = False
+                entry_to_remove.save()
+
+        return redirect('test_dog_app:community_profile')
+
+    return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
 

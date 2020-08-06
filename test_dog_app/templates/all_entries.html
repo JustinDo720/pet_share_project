@@ -8,7 +8,7 @@
        {% for entry in shareable_entries %}
            {% if entry.dog_name == dog %}
                {% if entry.dog_photo %}
-                   <img src="{{ entry.dog_photo.url }}" alt="Dog-Photo">
+                   <img src="{{ entry.dog_photo.url }}" style="width: 200px;height:200px" alt="Dog-Photo">
                {% endif %}
                <ul>
                     {{ entry | linebreaksbr }}

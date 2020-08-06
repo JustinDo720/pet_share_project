@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="{% url 'test_dog_app:community_profile' %}"
+          method="post">
+    {% csrf_token %}
+        {% if dog_name %}
+            {% for dog in dog_name %}
+                <h2>{{ dog }}</h2>
+                Your Community Entries:
+                {% for entry in entries %}
+                    {% if entry.dog_name == dog %}
+                        {% if entry.dog_photo %}
+                            <img src="{{ entry.dog_photo.url }}"
+                                 style="width: 200px;height: 200px"
+                                 alt="Dog-Photo">
+                        {% endif %}
+                            <ul>
+                                {{ entry | linebreaksbr }}
+                                <a href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">Edit</a>
+                                <label>
+                                    Remove <input type="checkbox"
+                                                  name="entry"
+                                                  value="{{ entry.id }}">
+                                </label>
+                            </ul>
+                    {% endif %}
+                {% endfor %}
+                <button name="submit">Save Changes</button>
+            {% endfor %}
+        {% else %}
+            <h2>There are currently no shared entries. Please consider sharing your wonderful entries
+            here</h2>
+        {% endif %}
+    </form>
+{% endblock content %}

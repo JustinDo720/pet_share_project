@@ -16,7 +16,12 @@
         </p>
 
     {% empty %}
-        <h2>No Entries have been added for {{ entry.dog_name }}</h2>
+        {% if all_dog_entries %}
+            <h2>All of your entries have been shared for {{ entry.dog_name }}. Please visit your community profile to
+                manage your shared entry :)</h2>
+        {% else %}
+            <h2>You current have no entries. Please enter an entry for {{ entry.dog_name }} and come back!</h2>
+        {% endif %}
     {% endfor %}
         <button name="submit">Share</button>
 </form>
