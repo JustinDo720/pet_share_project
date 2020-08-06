@@ -92,6 +92,19 @@ def write_about_dog(request, dog_id):
     return render(request, 'write_about_dog.html', content)
 
 
+def edit_dog_name(request, dog_id):
+    dog_name = DogName.objects.get(id=dog_id)
+
+    if request.method != 'POST':
+        form = DogNameForm(instance=dog_name)
+    else:
+        form = DogNameForm(instance=dog_name, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('test_dog_app:user_entries')
+
+    return render(request, 'edit_dog_name.html', {'form':form, 'dog_name': dog_name})
+
 @login_required
 def edit_dog_bio(request, entry_bio_id):
     dog_entries = Entry.objects.get(id= entry_bio_id)
