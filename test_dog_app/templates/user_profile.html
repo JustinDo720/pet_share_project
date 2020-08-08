@@ -3,10 +3,20 @@
 {% block content %}
     <div style="text-align: center">
         <h1>{{ user.username }}</h1>
-        <img src="{{ user.user_photo.url }}" alt="User-Profile-Picture">
+        {% if user.email %}
+            Email: {{ user.email }}<br>
+        {% endif %}
+        <img src="{{ user.profile.user_photo.url }}"
+             style="width: 200px; height: 200px"
+             alt="User-Profile-Picture">
     </div>
+    <h1>
+        <b><u>Dog's:</u></b>
+    </h1>
     {% for dog in user_dogs %}
-        {{ dog }}
+        <h3>
+            {{ forloop.counter }}. {{ dog }}
+        </h3>
     {% empty %}
     <h2>Currently, You have not added any dogs.</h2>
     {% endfor %}
