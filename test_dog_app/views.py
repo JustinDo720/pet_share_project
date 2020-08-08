@@ -199,3 +199,12 @@ def community_profile(request):
 
     return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
 
+
+@login_required
+def user_profile(request, user_id):
+    user_dogs = DogName.objects.filter(owner=user_id)
+
+    content = {
+        'user_dogs' : user_dogs,
+    }
+    return render(request, 'user_profile.html', content)

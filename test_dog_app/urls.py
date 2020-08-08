@@ -22,7 +22,8 @@ urlpatterns = [
     path('edit_dog_bio/<int:entry_bio_id>/', views.edit_dog_bio, name='edit_dog_bio'),
     path('all_entries', views.all_entries, name='all_entries'),
     path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
-    path('community_profile/', views.community_profile, name='community_profile')
+    path('community_profile/', views.community_profile, name='community_profile'),
+    path('user_profile/<int:user_id>/', views.user_profile, name='user_profile'),
 ]
 
 
