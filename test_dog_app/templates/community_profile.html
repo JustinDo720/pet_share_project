@@ -7,7 +7,7 @@
         {% if dog_name %}
             {% for dog in dog_name %}
                 <h2>{{ dog }}</h2>
-                Your Community Entries:
+                Your Community Entries:<br>
                 {% for entry in entries %}
                     {% if entry.dog_name == dog %}
                         {% if entry.dog_photo %}

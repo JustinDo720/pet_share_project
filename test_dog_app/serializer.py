@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import DogName, Entry
+from .models import DogName, Entry, Profile
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id', 'user', 'user_photo']
 
 
 class DogNameSerializer(serializers.ModelSerializer):
@@ -16,3 +22,5 @@ class EntrySerializer(serializers.ModelSerializer):
         fields = [
             'id', 'dog_name', 'share','bio_entry','dog_photo',
         ]
+
+

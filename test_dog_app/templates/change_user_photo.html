@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+    <header>
+            <br>Change Your Profile Picture
+    </header>
+    <form action="{% url 'test_dog_app:change_user_photo' user.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <img src="{{ profile.user_photo.url }}"
+         style="width: 400px; height: 400px"
+         alt="User-Profile-Picture">
+    {{ form | crispy }}<br>
+
+    <button name="submit">Save Changes</button>
+    </form>
+{% endblock content %}

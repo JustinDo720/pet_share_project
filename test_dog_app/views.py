@@ -1,13 +1,18 @@
 from django.shortcuts import render, redirect
-from .models import DogName, Entry, User
-from .serializer import DogNameSerializer, EntrySerializer
+from .models import DogName, Entry, Profile
+from .serializer import DogNameSerializer, EntrySerializer, ProfileSerializer
 from rest_framework import viewsets
-from .forms import DogNameForm, EntryForm
+from .forms import DogNameForm, EntryForm, ChangeProfilePictureForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class DogNameViewSet(viewsets.ModelViewSet):
@@ -62,7 +67,6 @@ def add_dog_name(request):
         if form.is_valid():
             new_dog_name = form.save(commit=False)
             new_dog_name.owner = request.user   # This puts the new dog under the requested user
-            messages.warning(request, f'User: {request.user}')  # Remove messages during production
             new_dog_name.save()
             return redirect('test_dog_app:user_entries')
 
@@ -208,3 +212,26 @@ def user_profile(request, user_id):
         'user_dogs' : user_dogs,
     }
     return render(request, 'user_profile.html', content)
+
+
+@login_required
+def change_user_photo(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+
+    if request.method != 'POST':
+        form = ChangeProfilePictureForm(instance=profile)
+    else:
+        form = ChangeProfilePictureForm(instance= profile,
+                                        data= request.POST,
+                                        files= request.FILES)
+        if form.is_valid():
+            form.save()
+
+            return redirect('test_dog_app:user_profile', user_id= profile.id)
+
+    context = {
+        'form':form,
+        'profile': profile
+    }
+
+    return render(request, 'change_user_photo.html', context)
