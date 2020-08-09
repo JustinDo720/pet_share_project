@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from test_dog_app.models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -9,3 +10,18 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email','password1','password2']
+
+
+class ChangeProfilePictureForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['user_photo']
+        labels = {'user_photo': 'Change Picture: '}
+
+
+class ChangeUserNameForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']

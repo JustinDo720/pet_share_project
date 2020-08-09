@@ -10,7 +10,7 @@
 
 
 {% if user.is_authenticated %}
-    Hello, <a href="{% url 'test_dog_app:user_profile' user.id %}"> {{ user }} </a>!
+    Hello, <a href="{% url 'users:user_profile' user.id %}"> {{ user }} </a>!
     <a href="{% url 'users:logout' %}">Log Out</a>
 
 {% else %}

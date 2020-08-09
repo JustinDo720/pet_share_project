@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import DogName, Entry, Profile
 from .serializer import DogNameSerializer, EntrySerializer, ProfileSerializer
 from rest_framework import viewsets
-from .forms import DogNameForm, EntryForm, ChangeProfilePictureForm, ChangeUserNameForm
+from .forms import DogNameForm, EntryForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -203,40 +203,3 @@ def community_profile(request):
 
     return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
 
-
-@login_required
-def user_profile(request, user_id):
-    user_dogs = DogName.objects.filter(owner=user_id)
-
-    content = {
-        'user_dogs' : user_dogs,
-    }
-    return render(request, 'user_profile.html', content)
-
-
-@login_required
-def edit_user_profile(request, user_id):
-    profile = Profile.objects.get(id=user_id)
-
-    if request.method != 'POST':
-        p_form = ChangeProfilePictureForm(instance=profile)
-        u_form = ChangeUserNameForm(instance=request.user)
-    else:
-        p_form = ChangeProfilePictureForm(instance= profile,
-                                          data= request.POST,
-                                          files= request.FILES)
-        u_form = ChangeUserNameForm(instance=request.user,
-                                    data=request.POST)
-        if p_form.is_valid() and u_form.is_valid():
-            p_form.save()
-            u_form.save()
-
-            return redirect('test_dog_app:user_profile', user_id= profile.id)
-
-    context = {
-        'p_form':p_form,
-        'u_form':u_form,
-        'profile': profile
-    }
-
-    return render(request, 'edit_user_profile.html', context)

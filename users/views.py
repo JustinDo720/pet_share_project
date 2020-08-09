@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, ChangeUserNameForm, ChangeProfilePictureForm
 from django.contrib.auth import login
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from test_dog_app.models import DogName, Entry, Profile
+
 # Create your views here.
 
 
@@ -19,3 +22,40 @@ def register(request):
 
     return render(request, 'registration/register.html', {'form': form})  # registration/template.html is required!
 
+
+@login_required
+def user_profile(request, user_id):
+    user_dogs = DogName.objects.filter(owner=user_id)
+
+    content = {
+        'user_dogs' : user_dogs,
+    }
+    return render(request, 'user_profile.html', content)
+
+
+@login_required
+def edit_user_profile(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+
+    if request.method != 'POST':
+        p_form = ChangeProfilePictureForm(instance=profile)
+        u_form = ChangeUserNameForm(instance=request.user)
+    else:
+        p_form = ChangeProfilePictureForm(instance= profile,
+                                          data= request.POST,
+                                          files= request.FILES)
+        u_form = ChangeUserNameForm(instance=request.user,
+                                    data=request.POST)
+        if p_form.is_valid() and u_form.is_valid():
+            p_form.save()
+            u_form.save()
+
+            return redirect('users:user_profile', user_id= profile.id)
+
+    context = {
+        'p_form':p_form,
+        'u_form':u_form,
+        'profile': profile
+    }
+
+    return render(request, 'edit_user_profile.html', context)

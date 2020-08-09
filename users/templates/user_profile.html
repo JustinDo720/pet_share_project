@@ -9,7 +9,7 @@
         <img src="{{ user.profile.user_photo.url }}"
              style="width: 200px; height: 200px"
              alt="User-Profile-Picture"><br>
-        <a href="{% url 'test_dog_app:change_user_photo' user.id %}">Edit Profile</a>
+        <a href="{% url 'users:edit_user_profile' user.id %}">Edit Profile</a>
     </div>
     <h1>
         <b><u>Dog's:</u></b>
