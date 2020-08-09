@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import DogName, Entry, Profile
 from .serializer import DogNameSerializer, EntrySerializer, ProfileSerializer
 from rest_framework import viewsets
-from .forms import DogNameForm, EntryForm, ChangeProfilePictureForm
+from .forms import DogNameForm, EntryForm, ChangeProfilePictureForm, ChangeUserNameForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -215,23 +215,28 @@ def user_profile(request, user_id):
 
 
 @login_required
-def change_user_photo(request, user_id):
+def edit_user_profile(request, user_id):
     profile = Profile.objects.get(id=user_id)
 
     if request.method != 'POST':
-        form = ChangeProfilePictureForm(instance=profile)
+        p_form = ChangeProfilePictureForm(instance=profile)
+        u_form = ChangeUserNameForm(instance=request.user)
     else:
-        form = ChangeProfilePictureForm(instance= profile,
-                                        data= request.POST,
-                                        files= request.FILES)
-        if form.is_valid():
-            form.save()
+        p_form = ChangeProfilePictureForm(instance= profile,
+                                          data= request.POST,
+                                          files= request.FILES)
+        u_form = ChangeUserNameForm(instance=request.user,
+                                    data=request.POST)
+        if p_form.is_valid() and u_form.is_valid():
+            p_form.save()
+            u_form.save()
 
             return redirect('test_dog_app:user_profile', user_id= profile.id)
 
     context = {
-        'form':form,
+        'p_form':p_form,
+        'u_form':u_form,
         'profile': profile
     }
 
-    return render(request, 'change_user_photo.html', context)
+    return render(request, 'edit_user_profile.html', context)

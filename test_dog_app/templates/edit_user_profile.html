@@ -4,14 +4,15 @@
 
 {% block content %}
     <header>
-            <br>Change Your Profile Picture
+            <br>Change Your Profile!
     </header>
     <form action="{% url 'test_dog_app:change_user_photo' user.id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+        {{ u_form | crispy }}<br>
     <img src="{{ profile.user_photo.url }}"
-         style="width: 400px; height: 400px"
+         style="width: 200px; height: 200px"
          alt="User-Profile-Picture">
-    {{ form | crispy }}<br>
+        {{ p_form | crispy }}<br>
 
     <button name="submit">Save Changes</button>
     </form>

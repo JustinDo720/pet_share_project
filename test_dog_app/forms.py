@@ -1,5 +1,6 @@
 from django import forms
-from .models import DogName, Entry, Profile
+from .models import DogName, Entry, Profile, User
+from django.contrib.auth.forms import UserChangeForm
 
 
 class DogNameForm(forms.ModelForm):
@@ -23,3 +24,9 @@ class ChangeProfilePictureForm(forms.ModelForm):
         fields = ['user_photo']
         labels = {'user_photo': 'Change Picture: '}
 
+
+class ChangeUserNameForm(UserChangeForm):
+    password = None
+    class Meta:
+        model = User
+        fields = ['username', 'email']

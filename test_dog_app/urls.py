@@ -25,7 +25,7 @@ urlpatterns = [
     path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
     path('community_profile/', views.community_profile, name='community_profile'),
     path('user_profile/<int:user_id>/', views.user_profile, name='user_profile'),
-    path('change_profile/<int:user_id>/', views.change_user_photo, name='change_user_photo'),
+    path('edit_user_profile/<int:user_id>/', views.edit_user_profile, name='change_user_photo'),
 ]
 
 
