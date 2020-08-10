@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Dogs</h1>
+    <!-- shareable_dogs.object_list is the same thing as just shareable_dogs alone because they're both iterable -->
+   {% for dog in shareable_dogs.object_list %}
+       <h2>{{ dog }}</h2>
+       {% for entry in shareable_entries %}
+           {% if entry.dog_name == dog %}
+               {% if entry.dog_photo %}
+                   <img src="{{ entry.dog_photo.url }}" style="width: 200px;height:200px" alt="Dog-Photo">
+               {% endif %}
+               <ul>
+                    {{ entry | linebreaksbr }}
+               </ul>
+           {% endif %}
+       {% endfor %}
+   {% endfor %}
+
+    <!-- Next page and Previous page -->
+    {% if shareable_dogs.has_previous %}
+        <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.previous_page_number }}">
+            Previous Page
+        </a>
+    {% endif %}
+
+    {% if shareable_dogs.has_next %}
+        <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.next_page_number }}">
+            Next Page
+        </a>
+    {% endif %}
+{% endblock content %}

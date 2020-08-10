@@ -6,6 +6,7 @@ from .forms import DogNameForm, EntryForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -140,11 +141,17 @@ def edit_dog_bio(request, entry_bio_id):
     return render(request, 'edit_dog_bio.html', content)
 
 
-def all_entries(request):
+def community_page(request):
     shareable_dogs = DogName.objects.filter(share=True)
     shareable_entries = Entry.objects.filter(share=True)
+
+    paginator = Paginator(shareable_dogs, 3)    # Set a paginator with the items, number of items per page
+    page_number = request.GET.get('page', 1)   # /?page=number NOTE: url must have trailing / to take parameters
+
+    shareable_dogs = paginator.get_page(page_number)    # showcases each 3 or less dogs per page
+
     context = {'shareable_entries': shareable_entries, 'shareable_dogs':shareable_dogs}
-    return render(request, 'all_entries.html', context)
+    return render(request, 'community_page.html', context)
 
 
 def share_dog(request, dog_id):
@@ -154,7 +161,6 @@ def share_dog(request, dog_id):
 
     if request.method == 'POST':
         entry_to_share = request.POST.getlist('entry')
-        print(entry_to_share)
         if entry_to_share:  # If users checked any box then we run the for loop
             dog_to_share.share = True
             dog_to_share.save()
@@ -169,7 +175,7 @@ def share_dog(request, dog_id):
                 entry.share = False
                 entry.save()
 
-        return redirect('test_dog_app:all_entries')
+        return redirect('test_dog_app:community_page')
 
     content = {
         'dog_to_share':dog_to_share,
@@ -185,7 +191,6 @@ def community_profile(request):
 
     if request.method == 'POST':
         remove_entries = request.POST.getlist('entry')
-        print(remove_entries)
         if remove_entries:
             for entry in remove_entries:
                 entry_to_remove = Entry.objects.get(id=entry)
