@@ -7,6 +7,7 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 # Create your views here.
 
@@ -50,6 +51,11 @@ def user_private_entries(request, dog_id):
 
     if dog.owner != request.user:
         raise Http404
+
+    paginator = Paginator(dog_entries, 5)
+    page_number = request.GET.get('page')
+
+    dog_entries = paginator.get_page(page_number)
 
     content = {
         'dog': dog,
@@ -142,8 +148,8 @@ def edit_dog_bio(request, entry_bio_id):
 
 
 def community_page(request):
-    shareable_dogs = DogName.objects.filter(share=True)
-    shareable_entries = Entry.objects.filter(share=True)
+    shareable_dogs = DogName.objects.filter(share=True).order_by('-shared_date')
+    shareable_entries = Entry.objects.filter(share=True).order_by('-shared_date')
 
     paginator = Paginator(shareable_dogs, 3)    # Set a paginator with the items, number of items per page
     page_number = request.GET.get('page', 1)   # /?page=number NOTE: url must have trailing / to take parameters
@@ -156,16 +162,20 @@ def community_page(request):
 
 def share_dog(request, dog_id):
     dog_to_share = DogName.objects.get(id=dog_id)
-    dog_info = dog_to_share.entry_set.filter(share=False)
+    dog_info = dog_to_share.entry_set.filter(share=False).order_by('-date_entry')
     all_dog_entries = dog_to_share.entry_set.all()
 
     if request.method == 'POST':
         entry_to_share = request.POST.getlist('entry')
         if entry_to_share:  # If users checked any box then we run the for loop
+            date_shared = timezone.now()
             dog_to_share.share = True
+            dog_to_share.shared_date = date_shared
             dog_to_share.save()
             for entry in entry_to_share:
                 change_entry_share = Entry.objects.get(id=entry)
+                date_shared = timezone.now()
+                change_entry_share.shared_date = date_shared
                 change_entry_share.share = True
                 change_entry_share.save()
         else:
@@ -186,8 +196,8 @@ def share_dog(request, dog_id):
 
 
 def community_profile(request):
-    dog_name = DogName.objects.filter(owner=request.user.id, share=True)
-    entries = Entry.objects.filter(share=True)
+    dog_name = DogName.objects.filter(owner=request.user.id, share=True).order_by('-shared_date')
+    entries = Entry.objects.filter(share=True).order_by('-shared_date')
 
     if request.method == 'POST':
         remove_entries = request.POST.getlist('entry')

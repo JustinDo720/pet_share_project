@@ -15,6 +15,7 @@ class DogName(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=70)
     share = models.BooleanField(default=False)
+    shared_date = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=False)
 
     def __str__(self):
         return self.name
@@ -25,7 +26,8 @@ class Entry(models.Model):
     bio_entry = models.TextField()
     dog_photo = models.ImageField(default=None, upload_to='photo_img/', blank=True)
     share = models.BooleanField(default=False)
-    date_entry = models.DateField(auto_now_add=True)    # Change Date format
+    date_entry = models.DateTimeField(auto_now_add=True)
+    shared_date = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=False)
 
     def __str__(self):
         return f'{self.bio_entry[:50]}...'

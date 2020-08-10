@@ -23,6 +23,9 @@
             <h2>You current have no entries. Please enter an entry for {{ entry.dog_name }} and come back!</h2>
         {% endif %}
     {% endfor %}
+
+    {% if dog_info %}
         <button name="submit">Share</button>
+    {% endif %}
 </form>
 {% endblock content %}

@@ -17,7 +17,7 @@
                 {% endif %}
             <li>
                 {{ entry.bio_entry | linebreaksbr }}
-                {{ entry.date_entry }}
+                {{ entry.date_entry | date:'M d, Y'}}
                 <a href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">
                     Edit Entry
                 </a>
@@ -31,6 +31,19 @@
     <a href="{% url 'test_dog_app:share_dog' dog.id %}">Share</a> <br>
     <a href="{% url 'test_dog_app:write_about_dog' dog.id %}">
         Add Entry Here!
-    </a>
+    </a> <br />
 
+    <!-- Next and Previous Pages-->
+
+    {% if dog_entries.has_previous %}
+        <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.previous_page_number }}">
+            &laquo;
+        </a>
+    {% endif %}
+
+    {% if dog_entries.has_next %}
+        <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.next_page_number }}">
+            &raquo;
+        </a>
+    {% endif %}
 {% endblock content %}
