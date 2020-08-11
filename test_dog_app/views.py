@@ -195,6 +195,7 @@ def share_dog(request, dog_id):
     return render(request, 'share_dog.html',content)
 
 
+@login_required
 def community_profile(request):
     dog_name = DogName.objects.filter(owner=request.user.id, share=True).order_by('-shared_date')
     entries = Entry.objects.filter(share=True).order_by('-shared_date')
