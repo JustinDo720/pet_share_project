@@ -2,36 +2,43 @@
 
 {% block content %}
 
-<div style="text-align: center;">
-    <h1>
-        {{user.username }}'s {{ dog }}
-    </h1>
+<div class="jumbotron jumbotron-fluid bg-transparent">
+    <div style="text-align: center;">
+        <h1>
+            {{user.username }}'s {{ dog }}
+        </h1>
+        <hr class="my-4">
+    </div>
+        <h2>Entries:</h2>
+        {% for entry in dog_entries %}
+            <ul>
+                {% if entry.dog_photo %}
+                        {# If the photo exist then we showcase the photo #}
+                        <img src="{{ entry.dog_photo.url }}" alt="Dog's Photo"
+                        style="width: 200px;height:200px" class="rounded">
+                    {% endif %}
+                <h6>
+                    {{ entry.bio_entry | linebreaksbr }}<br/>
+                    <span class="border border-primary">
+                    {{ entry.date_entry | date:'M d, Y'}}
+                    </span> &nbsp
+                    <a class='btn btn-outline-info' href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">
+                        Edit Entry
+                    </a>
+                </h6>
+            </ul>
+        {% empty %}
+            <h2>
+                No entries currently added. Please add one using the button below!
+            </h2>
+        {% endfor %}
+
+        <a class='btn btn-primary' href="{% url 'test_dog_app:write_about_dog' dog.id %}">
+            Add Entry Here!
+        </a>
+
+        <a class='btn btn-warning' href="{% url 'test_dog_app:share_dog' dog.id %}">Share</a>
 </div>
-    <h2>Entries</h2>
-    {% for entry in dog_entries %}
-        <p>
-            {% if entry.dog_photo %}
-                    {# If the photo exist then we showcase the photo #}
-                    <img src="{{ entry.dog_photo.url }}" alt="Dog's Photo"
-                    style="width: 200px;height:200px">
-                {% endif %}
-            <li>
-                {{ entry.bio_entry | linebreaksbr }}
-                {{ entry.date_entry | date:'M d, Y'}}
-                <a href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">
-                    Edit Entry
-                </a>
-
-            </li>
-        </p>
-    {% empty %}
-        <h2>No entries currently added. Please add one using the button below!</h2>
-    {% endfor %}
-
-    <a href="{% url 'test_dog_app:share_dog' dog.id %}">Share</a> <br>
-    <a href="{% url 'test_dog_app:write_about_dog' dog.id %}">
-        Add Entry Here!
-    </a> <br />
 
     <!-- Next and Previous Pages-->
 

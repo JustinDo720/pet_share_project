@@ -2,12 +2,22 @@
 
 {% block content %}
 
-<div style="text-align: center;">
-    <h1>Home Page</h1>
-    <h2>
-        This website allows users to post pictures of their dogs and write a biography
-        about them to share with out people online.
-    </h2>
+<div class="jumbotron bg-transparent" style="text-align:center">
+
+    <h1 class="display-4">Talk about your little friends here!</h1>
+    <p class="lead">
+        This website was primary created for you to express your feelings about your pets!
+    </p>
+    <hr class="my-4">
+    <p>
+        Our pets have been there for us and now it's time for you to share those memorable moments with our community!
+        Simply add your pets name, write a biography for them and click the share button. You may choose which entry
+        to share and if you want to remove it from the community page that's perfectly fine! To do so, please head over
+        to your community profile tab and edit your community entries from there. Thank you for visiting my website :)
+    </p>
+    <a class="btn btn-primary btn-lg" href="{% url 'users:register' %}" role="button">Register Here &raquo</a>
+    <hr class="my-4">
+
 </div>
 
 {% endblock content %}

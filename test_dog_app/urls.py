@@ -24,6 +24,7 @@ urlpatterns = [
     path('community_page/', views.community_page, name='community_page'),   # trailing / is required for pagination
     path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
     path('community_profile/', views.community_profile, name='community_profile'),
+    path('tutorial', views.tutorial, name='tutorial')
 
 ]
 

@@ -9,7 +9,7 @@
     {# This id has to be the entry id because if it was the dog's id it will only change that entry  #}
 
     {% csrf_token %}
-    {{ form | crispy }}
+    {{ form | crispy }} <br/>
 
     <button name="submit">Save Changes</button>
 </form>

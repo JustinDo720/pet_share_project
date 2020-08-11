@@ -4,16 +4,18 @@
     <h2>
         {% for dog in dogs %}
             <a href="{% url 'test_dog_app:user_private_entries' dog.id %}">
-               {{ forloop.counter }}. {{ dog }} <a href="{% url 'test_dog_app:edit_dog_name' dog.id %}">Edit</a><br>
+               {{ forloop.counter }}. {{ dog }} &nbsp
+                <button type="button" class="btn btn-outline-info">
+                    <a class='text-dark' href="{% url 'test_dog_app:edit_dog_name' dog.id %}">Edit</a>
+                </button> <br/>
             </a>
         {% empty %}
-            <ul>
-                No Dog names have been added.
-            </ul>
+            <h2>There are currently no dog's that have been added.</h2>
         {% endfor %}
     </h2>
     <h2>
-        <a href="{% url 'test_dog_app:add_dog_name' %}">
+        <a class='text-light active btn-primary btn-sm' aria-pressed="true"
+           href="{% url 'test_dog_app:add_dog_name' %}">
             Add your dog's name here!
         </a>
     </h2>

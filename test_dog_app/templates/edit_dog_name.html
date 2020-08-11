@@ -4,7 +4,7 @@
 {% block content %}
     <form action="{% url 'test_dog_app:edit_dog_name' dog_name.id %}" method="post">
     {% csrf_token %}
-    {{ form | crispy }}
+    {{ form | crispy }}<br/>
     <button name="submit">Submit</button>
     </form>
 {% endblock content %}

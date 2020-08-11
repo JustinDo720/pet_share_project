@@ -219,3 +219,6 @@ def community_profile(request):
 
     return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
 
+
+def tutorial(request):
+    return render(request, 'tutorial.html')

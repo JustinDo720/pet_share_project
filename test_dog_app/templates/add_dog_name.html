@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block content %}
     <p>Start by adding your dog's name here!</p>
 
     <form action="{% url 'test_dog_app:add_dog_name' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form | crispy }}<br/>
         <button name="submit">Add your dog's name to our list!</button>
     </form>
 
