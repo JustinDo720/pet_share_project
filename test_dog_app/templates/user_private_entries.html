@@ -33,24 +33,27 @@
             </h2>
         {% endfor %}
 
-        <a class='btn btn-primary' href="{% url 'test_dog_app:write_about_dog' dog.id %}">
+        <a class='btn btn-primary ' href="{% url 'test_dog_app:write_about_dog' dog.id %}">
             Add Entry Here!
-        </a>
+        </a> &nbsp
 
-        <a class='btn btn-warning' href="{% url 'test_dog_app:share_dog' dog.id %}">Share</a>
+        <a class='btn btn-warning btn-small' href="{% url 'test_dog_app:share_dog' dog.id %}">Share</a>
+
+        <div class="float-right">
+            <!-- Next and Previous Pages-->
+
+            {% if dog_entries.has_previous %}
+                <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.previous_page_number }}"
+                   class="btn btn-primary">
+                    Previous Page
+                </a>
+            {% endif %}
+            {% if dog_entries.has_next %}
+                <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.next_page_number }}"
+                   class="btn btn-primary">
+                    Next Page
+                </a>
+            {% endif %}
+        </div>
 </div>
-
-    <!-- Next and Previous Pages-->
-
-    {% if dog_entries.has_previous %}
-        <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.previous_page_number }}">
-            &laquo;
-        </a>
-    {% endif %}
-
-    {% if dog_entries.has_next %}
-        <a href="{% url 'test_dog_app:user_private_entries' dog.id %}?page={{ dog_entries.next_page_number }}">
-            &raquo;
-        </a>
-    {% endif %}
 {% endblock content %}

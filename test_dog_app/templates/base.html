@@ -33,25 +33,43 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-            <a class= 'nav-item nav-link active' href="{% url 'test_dog_app:authors_dog' %}">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class= 'nav-item nav-link active' href="{% url 'test_dog_app:authors_dog' %}">
                 Author's Dog <span class="sr-only"></span>
-            </a>
-            <a class= 'nav-item nav-link' href="{% url 'test_dog_app:user_entries' %}">Your Entries</a>
-            <a class= 'nav-item nav-link' href="{% url 'test_dog_app:community_profile' %}">Your Community Profile</a>
-            <a class= 'nav-item nav-link' href="{% url 'test_dog_app:community_page' %}">Community Page</a>
-            </div>
-            <div class="navbar ml-auto">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class= 'nav-item nav-link' href="{% url 'test_dog_app:user_entries' %}">Your Entries</a>
+                </li>
+                <li class="nav-item">
+                    <a class= 'nav-item nav-link' href="{% url 'test_dog_app:community_profile' %}">Your Community Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class= 'nav-item nav-link' href="{% url 'test_dog_app:community_page' %}">Community Page</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                     <span class="navbar-text">
-                         Welcome, <a class= 'text-info' href="{% url 'users:user_profile' user.id %}"> {{ user }}</a>!
-                    </span>
-                    <a class= 'nav-link text-info' href="{% url 'users:logout' %}">Log Out</a>
+                    <li class="nav-item">
+                         <span class="navbar-text">
+                             Welcome, <a class= 'text-info'
+                                         href="{% url 'users:user_profile' user.id %}"> {{ user }}</a>!
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class= 'nav-link' href="{% url 'users:logout' %}">Log Out</a>
+                    </li>
                 {% else %}
-                    <a class= 'nav-link text-info' href="{% url 'users:login' %}">Log In</a>
-                    <a class= 'nav-link text-info' href="{% url 'users:register' %}">Register</a>
+                    <li class="nav-item">
+                        <a class= 'nav-link' href="{% url 'users:login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class= 'nav-link' href="{% url 'users:register' %}">Register</a>
+                    </li>
                 {% endif %}
-            </div>
+
+            </ul>
         </div>
     </nav>
 
