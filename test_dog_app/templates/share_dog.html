@@ -3,18 +3,39 @@
 {% block content %}
 
 <div style="text-align: center">
-    {{ dog_to_share }}
+    <h2>
+        <a href="{% url 'test_dog_app:user_private_entries' dog_to_share.id %}">
+            {{ dog_to_share }}
+        </a>
+    </h2>
 </div>
     <form action="{% url 'test_dog_app:share_dog' dog_to_share.id %}" method="post">
     {% csrf_token %}
     {% for entry in dog_info %}
-        <p>
-            {{ entry }}
-            <label>
-                Share <input name="entry" type="checkbox" value="{{ entry.id }}"/>
-            </label><br>
-        </p>
-
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input name="entry" type="checkbox" value="{{ entry.id }}" aria-label="Share"/>
+            </div>
+        </div>
+        {% if entry.dog_photo %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ entry.dog_photo.url }}" class="card-img-top" alt="dog-photo">
+                <hr class="my-4">
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ entry }}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    {{ entry }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
     {% empty %}
         {% if all_dog_entries %}
             <h2>All of your entries have been shared for {{ entry.dog_name }}. Please visit your community profile to
@@ -23,9 +44,24 @@
             <h2>You current have no entries. Please enter an entry for {{ entry.dog_name }} and come back!</h2>
         {% endif %}
     {% endfor %}
-
-    {% if dog_info %}
-        <button name="submit">Share</button>
+    {% if dog_info.has_previous %}
+        <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.previous_page_number }}"
+                   class="btn btn-primary">
+                    Previous Page
+        </a>
     {% endif %}
+    {% if dog_info.has_next %}
+        <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.next_page_number }}"
+                   class="btn btn-primary">
+                    Next Page
+        </a>
+    {% endif %}
+    <div class="fixed-bottom">
+        {% if dog_info %}
+            <button class='btn btn-warning' name="submit">
+                Share
+            </button>
+        {% endif %}
+    </div>
 </form>
 {% endblock content %}
