@@ -2,32 +2,59 @@
 
 {% block content %}
 
-<h1>Dogs</h1>
+<h1>
+    Community
+</h1>
     <!-- shareable_dogs.object_list is the same thing as just shareable_dogs alone because they're both iterable -->
-   {% for dog in shareable_dogs.object_list %}
-       <h2>{{ dog }}</h2>
-       {% for entry in shareable_entries %}
-           {% if entry.dog_name == dog %}
-               {% if entry.dog_photo %}
-                   <img src="{{ entry.dog_photo.url }}" style="width: 200px;height:200px" alt="Dog-Photo">
-               {% endif %}
-               <ul>
-                    {{ entry | linebreaksbr }}
-               </ul>
-           {% endif %}
-       {% endfor %}
-   {% endfor %}
+{% for dog in shareable_dogs.object_list %}
+    <div class="card text-center">
+        <div class="card-header">
+            <a href="{% url 'users:user_profile' dog.owner.id %}">
+            {{ dog.owner }}
+           </a>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">{{ dog }}</h3>
+            {% for entry in shareable_entries %}
+                {% if entry.dog_name == dog %}
+                    {% if entry.dog_photo %}
+                        <div class="media">
+                            <img src="{{ entry.dog_photo.url }}" style="width: 100px; height: 100px"
+                                 class="mr-3" alt="dog-photo">
+                            <div class="media-body">
+                                <p>
+                                   {{ entry.bio_entry | linebreaksbr | truncatechars:200 }}
+                                </p>
+                            </div>
+                        </div><hr class="my-4">
+                    {% else %}
+                        <p>
+                           {{ entry.bio_entry | linebreaksbr | truncatechars:200 }}
+                        </p><hr class="my-3">
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        <a class="btn btn-outline-primary" href="#">Read All &raquo</a>
+        </div>
+        <div class="card-footer text-muted">
+            {{ dog.shared_date | date:'M d, Y' }}
+        </div>
+    </div><br/>
+{% endfor %}
+    <div class="float-right">
+        <!-- Next page and Previous page -->
+        {% if shareable_dogs.has_previous %}
+            <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.previous_page_number }}"
+            class="btn btn-primary">
+                Previous Page
+            </a>
+        {% endif %}
 
-    <!-- Next page and Previous page -->
-    {% if shareable_dogs.has_previous %}
-        <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.previous_page_number }}">
-            Previous Page
-        </a>
-    {% endif %}
-
-    {% if shareable_dogs.has_next %}
-        <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.next_page_number }}">
-            Next Page
-        </a>
-    {% endif %}
+        {% if shareable_dogs.has_next %}
+            <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.next_page_number }}"
+            class="btn btn-primary">
+                Next Page
+            </a>
+        {% endif %}
+    </div>
 {% endblock content %}

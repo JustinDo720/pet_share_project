@@ -187,7 +187,7 @@ def share_dog(request, dog_id):
 
         return redirect('test_dog_app:community_page')
 
-    paginator = Paginator(dog_info, 5)
+    paginator = Paginator(dog_info, 4)
 
     page_number = request.GET.get('page', 1)
     dog_info = paginator.get_page(page_number)

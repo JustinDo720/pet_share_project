@@ -44,24 +44,27 @@
             <h2>You current have no entries. Please enter an entry for {{ entry.dog_name }} and come back!</h2>
         {% endif %}
     {% endfor %}
-    {% if dog_info.has_previous %}
-        <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.previous_page_number }}"
-                   class="btn btn-primary">
-                    Previous Page
-        </a>
-    {% endif %}
-    {% if dog_info.has_next %}
-        <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.next_page_number }}"
-                   class="btn btn-primary">
-                    Next Page
-        </a>
-    {% endif %}
-    <div class="fixed-bottom">
+      <div class="float-left">
         {% if dog_info %}
             <button class='btn btn-warning' name="submit">
                 Share
             </button>
         {% endif %}
     </div>
+    <div class="float-right">
+        {% if dog_info.has_previous %}
+            <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.previous_page_number }}"
+                       class="btn btn-primary">
+                        Previous Page
+            </a>
+        {% endif %}
+        {% if dog_info.has_next %}
+            <a href="{% url 'test_dog_app:share_dog' dog_to_share.id %}?page={{ dog_info.next_page_number }}"
+                       class="btn btn-primary">
+                        Next Page
+            </a>
+        {% endif %}
+    </div>
+
 </form>
 {% endblock content %}

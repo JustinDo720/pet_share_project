@@ -6,27 +6,38 @@
     {% csrf_token %}
         {% if dog_name %}
             {% for dog in dog_name %}
-                <h2>{{ dog }}</h2>
-                Your Community Entries:<br>
-                {% for entry in entries %}
-                    {% if entry.dog_name == dog %}
-                        {% if entry.dog_photo %}
-                            <img src="{{ entry.dog_photo.url }}"
-                                 style="width: 200px;height: 200px"
-                                 alt="Dog-Photo">
-                        {% endif %}
-                            <ul>
-                                {{ entry | linebreaksbr }}
-                                <a href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">Edit</a>
-                                <label>
-                                    Remove <input type="checkbox"
-                                                  name="entry"
-                                                  value="{{ entry.id }}">
-                                </label>
-                            </ul>
-                    {% endif %}
-                {% endfor %}
-                <button name="submit">Save Changes</button>
+                <div class="card bg-light" style="width: 50rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            {{ dog }}
+                        </h2>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Your Community Entries:
+                        </h6><br>
+                        {% for entry in entries %}
+                            {% if entry.dog_name == dog %}
+                                {% if entry.dog_photo %}
+                                    <img src="{{ entry.dog_photo.url }}"
+                                         style="width: 200px;height: 200px"
+                                         alt="Dog-Photo"><br/>
+                                {% endif %}
+                                    {{ forloop.counter }}. {{ entry | linebreaksbr }}
+                                        <a class="btn btn-outline-info btn-sm"
+                                           href="{% url 'test_dog_app:edit_dog_bio' entry.id %}">
+                                            Edit
+                                        </a><br/>
+                                    <label class="btn btn-danger btn-sm">
+                                        <input type="checkbox" name="entry" id='entry_id' value="{{ entry.id }}">
+                                        Remove
+                                    </label>
+                                    <hr class="my-2">
+                            {% endif %}
+                        {% endfor %}
+                        <button name="submit" class="btn btn-success">
+                            Save Changes
+                        </button>
+                    </div>
+                </div><br/>
             {% endfor %}
         {% else %}
             <h2>There are currently no shared entries. Please consider sharing your wonderful entries
