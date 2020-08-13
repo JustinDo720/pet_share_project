@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from test_dog_app.models import DogName, Entry, Profile
-
+from django.http import Http404
 # Create your views here.
 
 
@@ -24,10 +24,24 @@ def register(request):
 
 
 @login_required
+def user_private_profile(request, user_id):
+    profile = Profile.objects.get(id=user_id)
+    user_dogs = profile.dogname_set.all()
+
+    if profile.user != request.user:
+        raise Http404
+
+    content = {'user_dogs' : user_dogs,}
+    return render(request, 'user_private_profile.html', content)
+
+
+@login_required
 def user_profile(request, user_id):
-    user_dogs = DogName.objects.filter(owner=user_id)
+    profile = Profile.objects.get(id=user_id)
+    user_dogs = profile.dogname_set.filter(share=True)
 
     content = {
+        'profile': profile,
         'user_dogs' : user_dogs,
     }
     return render(request, 'user_profile.html', content)
@@ -50,7 +64,7 @@ def edit_user_profile(request, user_id):
             p_form.save()
             u_form.save()
 
-            return redirect('users:user_profile', user_id= profile.id)
+            return redirect('users:user_private_profile', user_id= profile.id)
 
     context = {
         'p_form':p_form,

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron bg-light">
+  <h1 class="display-4">{{ dog_shared }}</h1>
+  <h6 class="lead">
+    By: <a class="text-info" href="{% url 'users:user_profile' dog_shared.owner.id %}">
+        {{ dog_shared.owner }}
+    </a>
+  </h6><hr class="my-4">
+
+  {% for entry in dog_entries %}
+      {% if entry.dog_photo %}
+          <ul class="list-unstyled bg-white">
+            <li class="media">
+                <img src="{{ entry.dog_photo.url }}" style="width: 200px; height: 200px"
+                     class= "rounded mr-3" alt="dog-photo">
+            <div class="media-body">
+                {{ entry.bio_entry | linebreaksbr }}
+            </div>
+            </li>
+          </ul>
+      {% else %}
+          <div class="card bg-white">
+            <div class="card-body">
+                <h6>
+                    {{ entry.bio_entry | linebreaksbr }}
+                </h6>
+            </div>
+          </div><br/>
+      {% endif %}
+  {% endfor %}
+    <div class="float-right">
+            <!-- Next page and Previous page -->
+            {% if dog_entries.has_previous %}
+                <a href="{% url 'test_dog_app:full_dog_page' dog_shared.id %}?page={{ dog_entries.previous_page_number }}"
+                class="btn btn-primary">
+                    Previous Page
+                </a>
+            {% endif %}
+
+            {% if dog_entries.has_next %}
+                <a href="{% url 'test_dog_app:full_dog_page' dog_shared.id %}?page={{ dog_entries.next_page_number }}"
+                class="btn btn-primary">
+                    Next Page
+                </a>
+            {% endif %}
+    </div>
+</div>
+
+{% endblock  %}

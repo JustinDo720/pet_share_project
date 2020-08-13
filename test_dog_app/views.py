@@ -74,6 +74,7 @@ def add_dog_name(request):
         if form.is_valid():
             new_dog_name = form.save(commit=False)
             new_dog_name.owner = request.user   # This puts the new dog under the requested user
+            new_dog_name.owner_profile = request.user.profile
             new_dog_name.save()
             return redirect('test_dog_app:user_entries')
 
@@ -158,6 +159,23 @@ def community_page(request):
 
     context = {'shareable_entries': shareable_entries, 'shareable_dogs':shareable_dogs}
     return render(request, 'community_page.html', context)
+
+
+def full_dog_page(request, dog_id):
+    dog_shared = DogName.objects.get(id=dog_id)
+    dog_entries = dog_shared.entry_set.filter(share=True)
+
+    paginator = Paginator(dog_entries, 4)
+    page_number = request.GET.get('page')
+
+    dog_entries = paginator.get_page(page_number)
+
+    content = {
+        'dog_shared': dog_shared,
+        'dog_entries': dog_entries
+    }
+
+    return render(request, 'full_dog_page.html', content)
 
 
 def share_dog(request, dog_id):

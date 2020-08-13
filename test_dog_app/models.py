@@ -13,6 +13,7 @@ class Profile(models.Model):
 
 class DogName(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=False, blank=False)
     name = models.CharField(max_length=70)
     share = models.BooleanField(default=False)
     shared_date = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=False)

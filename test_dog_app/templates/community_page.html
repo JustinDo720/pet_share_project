@@ -34,7 +34,7 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        <a class="btn btn-outline-primary" href="#">Read All &raquo</a>
+        <a class="btn btn-outline-primary" href="{% url 'test_dog_app:full_dog_page' dog.id %}">Read All &raquo</a>
         </div>
         <div class="card-footer text-muted">
             {{ dog.shared_date | date:'M d, Y' }}

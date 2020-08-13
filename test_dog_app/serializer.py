@@ -12,7 +12,7 @@ class DogNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = DogName
         fields = [
-            'id', 'owner','name', 'share'
+            'id', 'owner','owner_profile', 'name', 'share'
         ]
 
 

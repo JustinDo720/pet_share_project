@@ -2,14 +2,15 @@
 
 {% block content %}
     <div style="text-align: center">
-        <h1>{{ profile.user.username }}</h1>
-        {% if profile.user.email %}
-            Email: {{ profile.user.email }}<br>
+        <h1>{{ user.username }}</h1>
+        {% if user.email %}
+            Email: {{ user.email }}<br>
         {% endif %}
-        <img src="{{ profile.user.profile.user_photo.url }}"
+        <img src="{{ user.profile.user_photo.url }}"
              class="rounded-circle"
              style="width: 200px; height: 200px"
              alt="User-Profile-Picture"><br>
+        <a class='btn btn-outline-info' href="{% url 'users:edit_user_profile' user.id %}">Edit Profile</a>
     </div>
     <h1>
         <b><u>Dog's:</u></b>
@@ -19,6 +20,6 @@
             {{ forloop.counter }}. {{ dog }}
         </h3>
     {% empty %}
-    <h2>Currently, This user have not added any dogs.</h2>
+    <h2>Currently, You have not added any dogs.</h2>
     {% endfor %}
 {% endblock content %}

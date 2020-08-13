@@ -22,6 +22,7 @@ urlpatterns = [
     path('edit_dog_name/<int:dog_id>/', views.edit_dog_name, name='edit_dog_name'),
     path('edit_dog_bio/<int:entry_bio_id>/', views.edit_dog_bio, name='edit_dog_bio'),
     path('community_page/', views.community_page, name='community_page'),   # trailing / is required for pagination
+    path('community_page/<int:dog_id>/', views.full_dog_page, name='full_dog_page'),
     path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
     path('community_profile/', views.community_profile, name='community_profile'),
     path('tutorial', views.tutorial, name='tutorial')
