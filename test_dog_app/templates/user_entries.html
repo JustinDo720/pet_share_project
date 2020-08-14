@@ -10,13 +10,13 @@
                 </button> <br/>
             </a>
         {% empty %}
-            <h2>There are currently no dog's that have been added.</h2>
+            <h2>There are currently no pets that have been added.</h2>
         {% endfor %}
     </h2>
     <h2>
         <a class='text-light active btn-primary btn-sm' aria-pressed="true"
            href="{% url 'test_dog_app:add_dog_name' %}">
-            Add your dog's name here!
+            Add your pet's name here!
         </a>
     </h2>
 {% endblock content %}

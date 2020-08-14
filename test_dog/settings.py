@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # My apps. Make sure these goes first before some default overrides some templates.
     'test_dog_app',
     'rest_framework',
+    'bootstrap4',
     'users',
     'django_extensions',
     'crispy_forms',
@@ -142,4 +143,4 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_REDIRECT_URL = '/'
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

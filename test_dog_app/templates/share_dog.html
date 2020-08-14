@@ -38,10 +38,10 @@
     </div>
     {% empty %}
         {% if all_dog_entries %}
-            <h2>All of your entries have been shared for {{ entry.dog_name }}. Please visit your community profile to
+            <h2>All of your entries have been shared for {{ dog_to_share }}. Please visit your community profile to
                 manage your shared entry :)</h2>
         {% else %}
-            <h2>You current have no entries. Please enter an entry for {{ entry.dog_name }} and come back!</h2>
+            <h2>You current have no entries. Please enter an entry for {{ dog_to_share }} and come back!</h2>
         {% endif %}
     {% endfor %}
       <div class="float-left">
