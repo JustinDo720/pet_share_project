@@ -1,5 +1,103 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content%}
+<h1 style="text-align: center">
+    Tutorial
+</h1><br/>
+
+<!-- Tutorial 1-->
+<div class="card mx-auto" style="width: 50rem;">
+    <img src="{% static 'test_dog_app/tutorials/t1.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+    <p class="card-text">
+        First, you must create an account before viewing your pets and their entries. Simply click the register button
+        which will bring you to the register form.
+    </p>
+    </div>
+</div><br/>
+
+<!-- Tutorial 2-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t2.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+        Fill in the blanks with your information.<br>
+        NOTE: the email field could be left blank if you choose to leave out
+        that information. You can edit your profile later so there is no need to rush.
+    </p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 3-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t3.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+        1) You could use this navigation bar to go back and fourth throughout this website<br>
+        2) Click on your username to access your user profile. There, you could edit your information such as username,
+        profile picture, and email.<br>
+        3) You can begin by adding your Pet's name using the button.
+    </p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 4-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t4.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">Type in your pet's name and add your pet to my database :)</p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 5-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t5.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+        You will see your pet's name display on the page. <br>
+        NOTE: This page is unique to you. No one else will be able to view your pets UNLESS you decide to share your
+        post.
+    </p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 6-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t6.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+       Press the add entry button to write about your pet
+    </p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 7-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t7.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+        1) Fill out the biography form. Spacing does matter, however, pressing tab will NOT indent your work so please
+        consider pressing space 4 times to indent. I currently do not have a way around this. <br>
+        2) You could choose to upload a photo of your pet. But, you are limited to 1 photo per pet. You may
+        edit your photo afterwards so do not be afraid to choose.<br>
+        3) Enter your masterpiece by pressing the submit button <br>
+        NOTE: Similar to your pets, NO ONE will be able to see your pet's entries unless you decide to share them.
+    </p>
+  </div>
+</div><br/>
+
+<!-- Tutorial 8-->
+<div class="card mx-auto" style="width: 50rem;">
+  <img src="{% static 'test_dog_app/tutorials/t8.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">
+        Once you submitted your entry, you can take a look at the share and edit entry option. Click on the edit entry
+        to change your submission or photo and if you would like to share your posts please click that share button.<br>
+        You can check your community submissions by clicking "Your Community Profile Tab" where you will be able to
+        view, edit and remove your community entries.
+    </p>
+  </div>
+</div>
 
 {% endblock %}

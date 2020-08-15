@@ -43,7 +43,43 @@
             {% endif %}
         {% else %}
             <h2>There are currently no shared entries. Please consider sharing your wonderful entries
-            here</h2>
+                <button type="button" class="btn btn-warning btn-lg" data-toggle="modal"
+                        data-target="#share">
+                  <span class="text-dark">
+                      here
+                  </span>
+                </button>
+            </h2>
+            <div class="modal fade" id="share" tabindex="-1" role="dialog"
+                 aria-labelledby="share" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="share">Share</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                        {% for dog in all_user_dogs %}
+                            <a class="tooltip-test" href="{% url 'test_dog_app:share_dog' dog.id %}">
+                                {{ dog|title }}
+                            </a><br/>
+                        {% empty %}
+                            <h3>
+                                Sorry, you do have have any pets added yet. Please add one
+                                <a class="text-success" href="{% url 'test_dog_app:add_dog_name' %}">
+                                    here
+                                </a>
+                            </h3>
+                        {% endfor %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         {% endif %}
     </form>
 {% endblock content %}

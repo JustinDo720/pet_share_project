@@ -13,7 +13,9 @@
         Our pets have been there for us and now it's time for you to share those memorable moments with our community!
         Simply add your pets name, write a biography for them and click the share button. You may choose which entry
         to share and if you want to remove it from the community page that's perfectly fine! To do so, please head over
-        to your community profile tab and edit your community entries from there. Thank you for visiting my website :)
+        to your community profile tab and edit your community entries from there.
+        <a href="{% url 'test_dog_app:tutorial' %}">Here is an 8 step tutorial to get started!</a><br>
+        Thank you for visiting my website :)
     </p>
     {% if user.is_authenticated %}
         <a class="btn btn-outline-primary" href="{% url 'test_dog_app:user_entries' %}">

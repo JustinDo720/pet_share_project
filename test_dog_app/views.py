@@ -222,7 +222,8 @@ def share_dog(request, dog_id):
 def community_profile(request):
     dog_name = DogName.objects.filter(owner=request.user.id, share=True).order_by('-shared_date')
     entries = Entry.objects.filter(share=True).order_by('-shared_date')
-
+    all_user_dogs = DogName.objects.filter(owner=request.user.id)
+    print(all_user_dogs)
     if request.method == 'POST':
         remove_entries = request.POST.getlist('entry')
         if remove_entries:
@@ -240,7 +241,12 @@ def community_profile(request):
                 dog.save()
         return redirect('test_dog_app:community_profile')
 
-    return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
+    content= {
+        'dog_name': dog_name,
+        'entries': entries,
+        'all_user_dogs': all_user_dogs
+    }
+    return render(request, 'community_profile.html', content)
 
 
 def remove_entry(request, entry_id):
