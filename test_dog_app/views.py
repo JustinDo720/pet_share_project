@@ -3,7 +3,7 @@ from .models import DogName, Entry, Profile
 from .serializer import DogNameSerializer, EntrySerializer, ProfileSerializer
 from rest_framework import viewsets
 from .forms import DogNameForm, EntryForm
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -241,6 +241,20 @@ def community_profile(request):
         return redirect('test_dog_app:community_profile')
 
     return render(request, 'community_profile.html', {'dog_name':dog_name, 'entries':entries})
+
+
+def remove_entry(request, entry_id):
+    entry_to_delete = Entry.objects.get(id=entry_id)
+    entry_to_delete.delete()
+
+    return redirect('test_dog_app:user_private_entries', dog_id= entry_to_delete.dog_name.id)
+
+
+def remove_dog(request, dog_id):
+    dog_to_delete = DogName.objects.get(id=dog_id)
+    dog_to_delete.delete()
+
+    return redirect('test_dog_app:user_entries')
 
 
 def tutorial(request):

@@ -73,3 +73,4 @@ def edit_user_profile(request, user_id):
     }
 
     return render(request, 'edit_user_profile.html', context)
+

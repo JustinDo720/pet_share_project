@@ -25,6 +25,8 @@ urlpatterns = [
     path('community_page/<int:dog_id>/', views.full_dog_page, name='full_dog_page'),
     path('share_dog/<int:dog_id>/', views.share_dog, name='share_dog'),
     path('community_profile/', views.community_profile, name='community_profile'),
+    path('remove_entry/<int:entry_id>/', views.remove_entry, name='remove_entry'),
+    path('remove_dog/<int:dog_id>/', views.remove_dog, name='remove_dog'),
     path('tutorial', views.tutorial, name='tutorial')
 
 ]
