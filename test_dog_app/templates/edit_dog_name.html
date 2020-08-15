@@ -19,7 +19,10 @@
             </button>
           </div>
           <div class="modal-body">
-            Would you like to remove {{ dog_name }}?
+            Would you like to remove {{ dog_name }}? By doing so ALL OF {{ dog_name|upper }} WILL BE
+              <span class="text-danger ">
+                  <b>DELETED!!!</b>
+              </span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

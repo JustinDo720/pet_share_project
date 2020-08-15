@@ -5,62 +5,70 @@
 <h1>
     Community
 </h1>
-    <!-- shareable_dogs.object_list is the same thing as just shareable_dogs alone because they're both iterable -->
-{% for dog in shareable_dogs.object_list %}
-    <div class="card">
-        <div class="card-header" style="text-align: center">
-            <a href="{% url 'users:user_profile' dog.owner.id %}">
-            <img src="{{ dog.owner_profile.user_photo.url }}"
-                 alt="profile-picture"
-                 style="width: 64px;height: 64px">{{ dog.owner }}
-           </a>
-        </div>
-        <div class="card-body">
-            <h3 class="card-title" style="text-align: center">{{ dog }}</h3>
-            {% for entry in shareable_entries %}
-                {% if entry.dog_name == dog %}
-                    {% if entry.dog_photo %}
-                        <ul class="list-unstyled bg-white">
-                            <li class="media">
-                                <img src="{{ entry.dog_photo.url }}" style="width: 200px; height: 200px"
-                                     class= "rounded mr-3" alt="dog-photo">
-                            <div class="media-body mr-auto">
-                                {{ entry | linebreaksbr }}
-                            </div>
-                            </li>
-                          </ul><hr class="my-3">
-                      {% else %}
-                          <div class="card bg-white">
-                            <div class="card-body">
-                                <h6>
-                                    {{ entry | linebreaksbr  }}
-                                </h6>
-                            </div>
-                          </div><br/>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        <a class="btn btn-outline-primary" href="{% url 'test_dog_app:full_dog_page' dog.id %}">Read All &raquo</a>
-        </div>
-        <div class="card-footer text-muted" style="text-align: center">
-            {{ dog.shared_date | date:'M d, Y' }}
-        </div>
-    </div><br/>
-{% endfor %}
-    <div class="float-right">
-        <!-- Next page and Previous page -->
-        {% if shareable_dogs.has_previous %}
-            <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.previous_page_number }}"
-            class="btn btn-primary">
-                Previous Page
-            </a>
-        {% endif %}
 
-        {% if shareable_dogs.has_next %}
-            <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.next_page_number }}"
-            class="btn btn-primary">
-                Next Page
-            </a>
-        {% endif %}
-    </div>
+{% if shareable_entries %}
+    <!-- shareable_dogs.object_list is the same thing as just shareable_dogs alone because they're both iterable -->
+    {% for dog in shareable_dogs.object_list %}
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                <a href="{% url 'users:user_profile' dog.owner.id %}">
+                <img src="{{ dog.owner_profile.user_photo.url }}"
+                     alt="profile-picture"
+                     style="width: 64px;height: 64px">{{ dog.owner }}
+               </a>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title" style="text-align: center">{{ dog }}</h3>
+                {% for entry in shareable_entries %}
+                    {% if entry.dog_name == dog %}
+                        {% if entry.dog_photo %}
+                            <ul class="list-unstyled bg-white">
+                                <li class="media">
+                                    <img src="{{ entry.dog_photo.url }}" style="width: 200px; height: 200px"
+                                         class= "rounded mr-3" alt="dog-photo">
+                                <div class="media-body mr-auto">
+                                    {{ entry.bio_entry|truncatechars:500| linebreaksbr }}
+                                </div>
+                                </li>
+                              </ul><hr class="my-3">
+                          {% else %}
+                              <div class="card bg-white">
+                                <div class="card-body">
+                                    <h6>
+                                        {{ entry.bio_entry| truncatechars:500 | linebreaksbr }}
+                                    </h6>
+                                </div>
+                              </div><br/>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            <div class="float-right">
+                <a class="btn btn-outline-primary"
+                   href="{% url 'test_dog_app:full_dog_page' dog.id %}">
+                    Read All &raquo
+                </a>
+            </div>
+            </div>
+                <div class="card-footer text-muted" style="text-align: center">
+                    {{ dog.shared_date | date:'M d, Y' }}
+            </div>
+        </div><br/>
+    {% endfor %}
+        <div class="float-right">
+            <!-- Next page and Previous page -->
+            {% if shareable_dogs.has_previous %}
+                <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.previous_page_number }}"
+                class="btn btn-primary">
+                    Previous Page
+                </a>
+            {% endif %}
+
+            {% if shareable_dogs.has_next %}
+                <a href="{% url 'test_dog_app:community_page' %}?page={{ shareable_dogs.next_page_number }}"
+                class="btn btn-primary">
+                    Next Page
+                </a>
+            {% endif %}
+        </div>
+{% endif %}
 {% endblock content %}

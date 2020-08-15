@@ -5,7 +5,7 @@
 <div class="jumbotron jumbotron-fluid bg-transparent">
     <div style="text-align: center;">
         <h1>
-            {{user.username }}'s {{ dog }}
+            {{user.username|title }}'s {{ dog|title }}
         </h1>
         <hr class="my-4">
     </div>
@@ -17,8 +17,8 @@
                         <img src="{{ entry.dog_photo.url }}" alt="Dog's Photo"
                         style="width: 200px;height:200px" class="rounded">
                     {% endif %}
-                <h6>
-                    {{ entry.bio_entry | linebreaksbr }}<br/>
+                <p>
+                    {{ entry.bio_entry | linebreaks }}
                     <span class="border border-primary">
                     {{ entry.date_entry | date:'M d, Y'}}
                     </span> &nbsp
@@ -26,7 +26,7 @@
                         Edit Entry
                     </a>
                     <hr class="my-2">
-                </h6>
+                </p>
             </ul>
         {% empty %}
             <h2>

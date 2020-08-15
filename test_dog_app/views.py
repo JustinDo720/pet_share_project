@@ -52,7 +52,7 @@ def user_private_entries(request, dog_id):
     if dog.owner != request.user:
         raise Http404
 
-    paginator = Paginator(dog_entries, 5)
+    paginator = Paginator(dog_entries, 3)
     page_number = request.GET.get('page')
 
     dog_entries = paginator.get_page(page_number)
@@ -165,7 +165,7 @@ def full_dog_page(request, dog_id):
     dog_shared = DogName.objects.get(id=dog_id)
     dog_entries = dog_shared.entry_set.filter(share=True)
 
-    paginator = Paginator(dog_entries, 4)
+    paginator = Paginator(dog_entries, 3)
     page_number = request.GET.get('page')
 
     dog_entries = paginator.get_page(page_number)
@@ -205,7 +205,7 @@ def share_dog(request, dog_id):
 
         return redirect('test_dog_app:community_page')
 
-    paginator = Paginator(dog_info, 4)
+    paginator = Paginator(dog_info, 3)
 
     page_number = request.GET.get('page', 1)
     dog_info = paginator.get_page(page_number)
@@ -246,6 +246,7 @@ def community_profile(request):
 def remove_entry(request, entry_id):
     entry_to_delete = Entry.objects.get(id=entry_id)
     entry_to_delete.delete()
+    messages.warning(request, f'You have removed an entry from {entry_to_delete.dog_name}.')
 
     return redirect('test_dog_app:user_private_entries', dog_id= entry_to_delete.dog_name.id)
 
@@ -253,6 +254,7 @@ def remove_entry(request, entry_id):
 def remove_dog(request, dog_id):
     dog_to_delete = DogName.objects.get(id=dog_id)
     dog_to_delete.delete()
+    messages.warning(request, f'You have removed {dog_to_delete} from your pets list.')
 
     return redirect('test_dog_app:user_entries')
 
