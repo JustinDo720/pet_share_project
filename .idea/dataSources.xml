@@ -9,5 +9,12 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="qdunzdpr" uuid="055adfee-9235-4e94-86f8-5ad66d54e660">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>project_db</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ruby.db.elephantsql.com:5432/qdunzdpr</jdbc-url>
+    </data-source>
   </component>
 </project>
