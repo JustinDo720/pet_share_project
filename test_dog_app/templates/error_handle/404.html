@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron mx-auto">
+    <h1 class="display4" style="text-align:center">
+        404 Error
+    </h1>
+    <hr class="my-4"/>
+    <h4 style="text-align: center">
+        There was an issue rendering this page because it either does not exist or you're not authenticated. Please
+        return to the home page and DO NOT CLICK THIS RED BUTTON!!!
+    </h4><br/>
+    <a class='btn btn-danger btn-lg' href="{% url 'test_dog_app:index' %}">
+            <span class="text-danger">
+                This button will take you to the home page lol :)
+            </span>
+        </a>
+</div>
+
+{% endblock %}

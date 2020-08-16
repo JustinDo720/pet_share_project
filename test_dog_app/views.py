@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import DogName, Entry, Profile
 from .serializer import DogNameSerializer, EntrySerializer, ProfileSerializer
 from rest_framework import viewsets
 from .forms import DogNameForm, EntryForm
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -31,6 +31,10 @@ def index(request):
     return render(request, 'index.html')
 
 
+def tutorial(request):
+    return render(request, 'tutorial.html')
+
+
 def authors_dog(request):
     return render(request, 'authors_dog.html')
 
@@ -46,7 +50,7 @@ def user_entries(request):
 
 @login_required
 def user_private_entries(request, dog_id):
-    dog = DogName.objects.get(id=dog_id)
+    dog = get_object_or_404(DogName, id=dog_id)
     dog_entries = dog.entry_set.order_by('-date_entry')
 
     if dog.owner != request.user:
@@ -148,34 +152,20 @@ def edit_dog_bio(request, entry_bio_id):
     return render(request, 'edit_dog_bio.html', content)
 
 
-def community_page(request):
-    shareable_dogs = DogName.objects.filter(share=True).order_by('-shared_date')
-    shareable_entries = Entry.objects.filter(share=True).order_by('-shared_date')
+def remove_entry(request, entry_id):
+    entry_to_delete = Entry.objects.get(id=entry_id)
+    entry_to_delete.delete()
+    messages.warning(request, f'You have removed an entry from {entry_to_delete.dog_name}.')
 
-    paginator = Paginator(shareable_dogs, 3)    # Set a paginator with the items, number of items per page
-    page_number = request.GET.get('page', 1)   # /?page=number NOTE: url must have trailing / to take parameters
-
-    shareable_dogs = paginator.get_page(page_number)    # showcases each 3 or less dogs per page
-
-    context = {'shareable_entries': shareable_entries, 'shareable_dogs':shareable_dogs}
-    return render(request, 'community_page.html', context)
+    return redirect('test_dog_app:user_private_entries', dog_id= entry_to_delete.dog_name.id)
 
 
-def full_dog_page(request, dog_id):
-    dog_shared = DogName.objects.get(id=dog_id)
-    dog_entries = dog_shared.entry_set.filter(share=True)
+def remove_dog(request, dog_id):
+    dog_to_delete = DogName.objects.get(id=dog_id)
+    dog_to_delete.delete()
+    messages.warning(request, f'You have removed {dog_to_delete} from your pets list.')
 
-    paginator = Paginator(dog_entries, 3)
-    page_number = request.GET.get('page')
-
-    dog_entries = paginator.get_page(page_number)
-
-    content = {
-        'dog_shared': dog_shared,
-        'dog_entries': dog_entries
-    }
-
-    return render(request, 'full_dog_page.html', content)
+    return redirect('test_dog_app:user_entries')
 
 
 def share_dog(request, dog_id):
@@ -223,7 +213,6 @@ def community_profile(request):
     dog_name = DogName.objects.filter(owner=request.user.id, share=True).order_by('-shared_date')
     entries = Entry.objects.filter(share=True).order_by('-shared_date')
     all_user_dogs = DogName.objects.filter(owner=request.user.id)
-    print(all_user_dogs)
     if request.method == 'POST':
         remove_entries = request.POST.getlist('entry')
         if remove_entries:
@@ -249,21 +238,39 @@ def community_profile(request):
     return render(request, 'community_profile.html', content)
 
 
-def remove_entry(request, entry_id):
-    entry_to_delete = Entry.objects.get(id=entry_id)
-    entry_to_delete.delete()
-    messages.warning(request, f'You have removed an entry from {entry_to_delete.dog_name}.')
+def community_page(request):
+    shareable_dogs = DogName.objects.filter(share=True).order_by('-shared_date')
+    shareable_entries = Entry.objects.filter(share=True).order_by('-shared_date')
 
-    return redirect('test_dog_app:user_private_entries', dog_id= entry_to_delete.dog_name.id)
+    paginator = Paginator(shareable_dogs, 3)    # Set a paginator with the items, number of items per page
+    page_number = request.GET.get('page', 1)   # /?page=number NOTE: url must have trailing / to take parameters
 
+    shareable_dogs = paginator.get_page(page_number)    # showcases each 3 or less dogs per page
 
-def remove_dog(request, dog_id):
-    dog_to_delete = DogName.objects.get(id=dog_id)
-    dog_to_delete.delete()
-    messages.warning(request, f'You have removed {dog_to_delete} from your pets list.')
-
-    return redirect('test_dog_app:user_entries')
+    context = {'shareable_entries': shareable_entries, 'shareable_dogs':shareable_dogs}
+    return render(request, 'community_page.html', context)
 
 
-def tutorial(request):
-    return render(request, 'tutorial.html')
+def full_dog_page(request, dog_id):
+    dog_shared = get_object_or_404(DogName, id=dog_id)
+    dog_entries = dog_shared.entry_set.filter(share=True)
+
+    paginator = Paginator(dog_entries, 3)
+    page_number = request.GET.get('page')
+
+    dog_entries = paginator.get_page(page_number)
+
+    content = {
+        'dog_shared': dog_shared,
+        'dog_entries': dog_entries
+    }
+
+    return render(request, 'full_dog_page.html', content)
+
+
+def custom_404(request, exception):
+    return render(request, 'error_handle/404.html')
+
+
+def custom_500(request):
+    return render(request, 'error_handle/500.html')
