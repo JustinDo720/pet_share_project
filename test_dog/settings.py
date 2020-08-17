@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,11 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bro&x8_f-y2lj!&yxhcwi7tixv6s7x=$kai7itwr9oqjln#7#r'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -164,3 +165,12 @@ AWS_S3_REGION_NAME = 'us-east-2'
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'    # Static Files
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'   # Media Files
+
+# Django Heroku
+django_heroku.settings(locals())
+
+# Debug Settings
+if os.environ.get('DEBUG') == 'True':
+    DEBUG = True
+else:
+    DEBUG = False
